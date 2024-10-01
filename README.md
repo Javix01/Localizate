@@ -34,9 +34,9 @@ Localízate ofrece una experiencia para explorar servicios de todo tipo dentro d
 
 # Conversaciones con Gemini 
 ## Instalación Maven.
-[Instalar Maven para Java 17 Juan Perez](https://gemini.google.com/app/4723feb329cd40bc?hl=es-ES)
-[Instalar Maven para Java 17 Javier García](https://g.co/gemini/share/b40ddec899be)
+* [Instalar Maven para Java 17 Juan Perez](https://gemini.google.com/app/4723feb329cd40bc?hl=es-ES)
+* [Instalar Maven para Java 17 Javier García](https://g.co/gemini/share/b40ddec899be)
 
 ## Instalación GitHub, update y markdown
-[Instalación GitHub, update y markdown, Javier García](https://g.co/gemini/share/71610a0f085a)
-[Markdown, Juan Perez](https://gemini.google.com/app/f0ff4e1942e3ef37?hl=es-ES)
+* [Instalación GitHub, update y markdown, Javier García](https://g.co/gemini/share/71610a0f085a)
+* [Markdown, Juan Perez](https://gemini.google.com/app/f0ff4e1942e3ef37?hl=es-ES)
