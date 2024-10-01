@@ -1,6 +1,6 @@
 # Localízate
 
-![LOGO](logo.png)
+![LOGO](logo.jpeg)
 
 ## Integrantes
 - **Juan Pérez Villegas** 09220337-M
