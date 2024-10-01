@@ -30,3 +30,6 @@ Localízate ofrece una experiencia para explorar servicios de todo tipo dentro d
 - Posibilidad de elegir el idioma de la interfaz.
 - Añadir la capacidad de búsqueda de pisos y residencias disponibles.
 - Capacidad de guardar establecimientos como “favoritos”.
+
+## Funcionalidades opcionales recomendables o futuribles 
+[Instalar Maven para Java 17](https://gemini.google.com/app/4723feb329cd40bc?hl=es-ES)
