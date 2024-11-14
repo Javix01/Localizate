@@ -37,6 +37,10 @@ Localízate ofrece una experiencia para explorar servicios de todo tipo dentro d
 * [Instalar Maven para Java 17 Juan Perez](https://gemini.google.com/app/4723feb329cd40bc?hl=es-ES)
 * [Instalar Maven para Java 17 Javier García](https://g.co/gemini/share/b40ddec899be)
 
-## Instalación GitHub, update y markdown
+## Instalación GitHub, update y markdown.
 * [Instalación GitHub, update y markdown, Javier García](https://g.co/gemini/share/71610a0f085a)
 * [Markdown, Juan Perez](https://gemini.google.com/app/f0ff4e1942e3ef37?hl=es-ES)
+
+## Actividad de CommandLineRunner.
+* [https://g.co/gemini/share/e7da01f0b863](https://g.co/gemini/share/474e21648467)
+* [https://g.co/gemini/share/71610a0f085a](https://g.co/gemini/share/f9c4c7fb875c)
