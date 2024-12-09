@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Actualizar Dirección</title>
+
+    <!-- Agregar las referencias a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+		<h2>Actualizar Dirección de <span th:text="${usuario.nombre}"></span></h2>
+				 
+        <!-- Formulario para actualizar dirección -->
+        <form th:action="@{/actualizarDireccion/{direccionId}(direccionId=${direccion.id})}" method="post">
+            <div class="form-group">
+                <label for="codigoPostal">Código Postal:</label>
+                <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" th:value="${direccion.codigoPostal}" required/>
+            </div>
+            <div class="form-group">
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" class="form-control" id="ciudad" name="ciudad" th:value="${direccion.ciudad}" required/>
+            </div>
+            <div class="form-group">
+                <label for="calle">Calle:</label>
+                <input type="text" class="form-control" id="calle" name="calle" th:value="${direccion.calle}" required/>
+            </div>
+            <!--Devolvemos de forma oculta el i del usuario asociado a la direccion al metodo que procesa el post-->
+			<input type="hidden" name="usuario.id" th:value="${direccion.usuario.id}" />
+            <button type="submit" class="btn btn-success">Actualizar</button>
+        </form>
+        
+        <!-- Enlace para volver a la lista de usuarios o a donde desees -->
+        <a th:href="@{/listUsuarios}">Volver a la lista de usuarios</a>
+    </div>
+
+    <!-- Agregar las referencias a Bootstrap JS y Popper.js (necesarios para algunos componentes de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
