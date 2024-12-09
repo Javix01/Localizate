@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Listar Establecimientos</title>
+
+    <!-- Agregar las referencias a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Agregar las referencias a Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Tabla de Establecimientos</h2>
+        
+        <!-- Botón Añadir Establecimiento -->
+        <a th:href="@{/addEstablecimiento}" class="btn btn-success mb-3">
+            <i class="fas fa-plus"></i> Añadir Establecimiento
+        </a>
+        
+        <form th:action="@{/buscarEstablecimientos}" method="get" class="mb-4">
+		    <div class="form-row">
+		        <!-- Campo de búsqueda por nombre -->
+		        <div class="col">
+		            <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre" th:value="${param.nombre}">
+		        </div>
+		        <!-- Campo de búsqueda por ciudad -->
+		        <div class="col">
+		            <input type="text" name="ciudad" class="form-control" placeholder="Buscar por ciudad" th:value="${param.ciudad}">
+		        </div>
+		        <!-- Campo de selección para tipo de servicio -->
+		        <div class="col">
+		            <select name="tipoServicio" class="form-control" th:value="${param.tipoServicio}">
+		                <option value="">Seleccionar tipo de servicio</option>
+		                <option value="Restaurante">Restaurante</option>
+		                <option value="Hotel">Hotel</option>
+		                <option value="Tienda">Tienda</option>
+		                <!-- Agrega más opciones según tu modelo -->
+		            </select>
+		        </div>
+		        <!-- Botón de búsqueda -->
+		        <div class="col">
+		            <button type="submit" class="btn btn-primary">
+		                <i class="fas fa-search"></i> Buscar
+		            </button>
+		        </div>
+		    </div>
+		</form>
+        
+
+        <!-- Utilizar las clases de Bootstrap para la tabla principal -->
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Localización</th>
+                    <th>Calle</th>
+                    <th>Ciudad</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Web</th>
+                    <th>Reseña</th>
+                    <th>Tipo</th>
+                    <th>Editar</th>
+                    <th>Borrar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterar sobre la lista de establecimientos -->
+                <tr th:each="establecimiento : ${listaEstablecimientos}">
+                    <td th:text="${establecimiento.nombre}">Nombre</td>
+                    <td th:text="${establecimiento.localizacion}">Localización</td>
+                    <td th:text="${establecimiento.calle}">Calle</td>
+                    <td th:text="${establecimiento.ciudad}">Ciudad</td>
+                    <td th:text="${establecimiento.email}">Email</td>
+                    <td th:text="${establecimiento.telefono}">Teléfono</td>
+                    <td>
+                        <a th:href="${establecimiento.web}" target="_blank" th:text="${establecimiento.web}">Web</a>
+                    </td>
+                    <td th:text="${establecimiento.reseña}">Reseña</td>
+                    <td th:text="${establecimiento.tipoEstablecimiento}">Tipo</td>
+                    <td>
+                        <!-- Botón Editar (para establecimiento) -->
+                        <a th:href="@{/actualizarEstablecimiento/{id}(id=${establecimiento.id})}" class="btn btn-warning">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <!-- Formulario para eliminar establecimiento -->
+                        <form action="#" th:action="@{/deleteEstablecimiento/{id}(id=${establecimiento.id})}" th:method="delete">
+                            <button type="submit" class="btn btn-danger">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Agregar las referencias a Bootstrap JS y Popper.js (necesarios para algunos componentes de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
