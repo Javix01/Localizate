@@ -1,1 +1,4 @@
 Esta es la parte donde se encuentra la webapp
+
+9/12/2024 20:38
+Se ha creado una lista, en la que se puede buscar por tipo de establecimiento, por nombre y por ciudad, se pueden añadir establecimientos nuevos y editar, solo que al editar no se mantiene la información de las reseñas.
