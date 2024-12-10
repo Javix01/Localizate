@@ -5,3 +5,6 @@ Se ha creado una lista, en la que se puede buscar por tipo de establecimiento, p
 
 9/12/2024 21:12
 Se ha añadido que cuando se pulse sobre un nombre se mostraran todos los datos de forma individual.
+
+10/12/2024 17:30
+Se ha implememtado un login y registro de usuarios, que nos permite entrar a la lista de establecimientos y se pueden hacer reservas, aun que dicho sistema aun falla.
