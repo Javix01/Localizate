@@ -8,3 +8,6 @@ Se ha añadido que cuando se pulse sobre un nombre se mostraran todos los datos 
 
 10/12/2024 17:30
 Se ha implememtado un login y registro de usuarios, que nos permite entrar a la lista de establecimientos y se pueden hacer reservas, aun que dicho sistema aun falla.
+
+10/12/2024 21:00
+Se ha mejorado el sistema de login y registro, haciendo que den mensajes dependiendo de las distintas situaciones que tiene. Se ha corregido problemas que había con respecto el direccionamiento de ciertas páginas a otras.
