@@ -11,3 +11,6 @@ Se ha implememtado un login y registro de usuarios, que nos permite entrar a la 
 
 10/12/2024 21:00
 Se ha mejorado el sistema de login y registro, haciendo que den mensajes dependiendo de las distintas situaciones que tiene. Se ha corregido problemas que había con respecto el direccionamiento de ciertas páginas a otras.
+
+11/12/2024 00:54
+Ahora desde la reserva se puede volver sin problema, si se pulsa el menu estableciemiento y el logo se vuelve a la lista de establecimientos.
