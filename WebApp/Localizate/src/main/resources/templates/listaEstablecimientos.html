@@ -9,15 +9,42 @@
 
     <!-- Agregar las referencias a Font Awesome para los iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <style>
+        .logo-image {
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Menú de navegación -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/listEstablecimientos">
+                <img src="../static/images/logo.jpeg" alt="Logo" class="logo-image">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/listEstablecimientos">Establecimientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/misReservas">Mis Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
     <div class="container mt-5">
-        <h2>Tabla de Establecimientos</h2>
-        
-        <!-- Botón Añadir Establecimiento -->
-        <a th:href="@{/addEstablecimiento}" class="btn btn-success mb-3">
-            <i class="fas fa-plus"></i> Añadir Establecimiento
-        </a>
+        <h2>Establecimientos</h2>
         
         <form th:action="@{/buscarEstablecimientos}" method="get" class="mb-4">
 		    <div class="form-row">
@@ -53,7 +80,6 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Nombre</th>
-                    <th>Localización</th>
                     <th>Calle</th>
                     <th>Ciudad</th>
                     <th>Email</th>
@@ -72,7 +98,6 @@
                         <!-- Enlace para ver los detalles del establecimiento -->
                         <a th:href="@{/detallesEstablecimiento/{id}(id=${establecimiento.id})}" th:text="${establecimiento.nombre}"></a>
                     </td>
-                    <td th:text="${establecimiento.localizacion}">Localización</td>
                     <td th:text="${establecimiento.calle}">Calle</td>
                     <td th:text="${establecimiento.ciudad}">Ciudad</td>
                     <td th:text="${establecimiento.email}">Email</td>
@@ -99,11 +124,17 @@
                 </tr>
             </tbody>
         </table>
+        <!-- Botón Añadir Establecimiento -->
+        <a th:href="@{/addEstablecimiento}" class="btn btn-success mb-3">
+            <i class="fas fa-plus"></i> Añadir Establecimiento
+        </a>
     </div>
 
     <!-- Agregar las referencias a Bootstrap JS y Popper.js (necesarios para algunos componentes de Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    
 </body>
 </html>

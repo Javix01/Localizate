@@ -1,13 +1,11 @@
 package com.Localizate.demo.services;
 
 import java.util.Optional;
-
-import com.Localizate.demo.domain.Direccion;
 import com.Localizate.demo.domain.Usuario;
 
 public interface UsuarioService {
 
-    // Método para registrar un nuevo usuario
+	// Método para registrar un nuevo usuario
     Usuario registrarUsuario(Usuario usuario);
 
     // Método para autenticar un usuario

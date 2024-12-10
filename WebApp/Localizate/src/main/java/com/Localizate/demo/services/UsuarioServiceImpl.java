@@ -4,7 +4,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.Localizate.demo.domain.Direccion;
 import com.Localizate.demo.domain.Usuario;
 import com.Localizate.demo.repositories.UsuarioRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
