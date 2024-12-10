@@ -23,6 +23,7 @@ public class Establecimiento {
     private int telefono;
     private String web;
     private float reseña;
+    private boolean admiteReservas;
     
     @Column(name = "tipo_establecimiento")
     private String tipoEstablecimiento;
@@ -121,11 +122,19 @@ public class Establecimiento {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	public boolean isAdmiteReservas() {
+	    return admiteReservas;
+	}
+
+	public void setAdmiteReservas(boolean admiteReservas) {
+	    this.admiteReservas = admiteReservas;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(calle, ciudad, email, id, localizacion, nombre, reseña, telefono, tipoEstablecimiento,
-				usuario, web);
+		return Objects.hash(admiteReservas, calle, ciudad, email, id, localizacion, nombre, reseña, telefono,
+				tipoEstablecimiento, usuario, web);
 	}
 
 	@Override
@@ -137,9 +146,10 @@ public class Establecimiento {
 		if (getClass() != obj.getClass())
 			return false;
 		Establecimiento other = (Establecimiento) obj;
-		return Objects.equals(calle, other.calle) && Objects.equals(ciudad, other.ciudad)
-				&& Objects.equals(email, other.email) && Objects.equals(id, other.id) 
-				&& Objects.equals(localizacion, other.localizacion) && Objects.equals(nombre, other.nombre)
+		return admiteReservas == other.admiteReservas && Objects.equals(calle, other.calle)
+				&& Objects.equals(ciudad, other.ciudad) && Objects.equals(email, other.email)
+				&& Objects.equals(id, other.id) && Objects.equals(localizacion, other.localizacion)
+				&& Objects.equals(nombre, other.nombre)
 				&& Float.floatToIntBits(reseña) == Float.floatToIntBits(other.reseña) && telefono == other.telefono
 				&& Objects.equals(tipoEstablecimiento, other.tipoEstablecimiento)
 				&& Objects.equals(usuario, other.usuario) && Objects.equals(web, other.web);
@@ -149,7 +159,7 @@ public class Establecimiento {
 	public String toString() {
 		return "Establecimiento [id=" + id + ", nombre=" + nombre + ", localizacion=" + localizacion + ", calle="
 				+ calle + ", ciudad=" + ciudad + ", email=" + email + ", telefono=" + telefono + ", web=" + web
-				+ ", reseña=" + reseña + ", tipoEstablecimiento=" + tipoEstablecimiento
-				+ ", usuario=" + usuario + "]";
-	}    
+				+ ", reseña=" + reseña + ", admiteReservas=" + admiteReservas + ", tipoEstablecimiento="
+				+ tipoEstablecimiento + ", usuario=" + usuario + "]";
+	}  
 }

@@ -81,4 +81,17 @@ public class EstablecimientoController {
         new IllegalArgumentException("Establecimiento no encontrado")));
         return "detallesEstablecimiento"; // Nombre del template
     }
+    
+ // Endpoint para ver la lista de establecimientos
+    @GetMapping("/establecimientos")
+    public String listarEstablecimientos(Model model) {
+        // Obtener la lista de todos los establecimientos
+        List<Establecimiento> establecimientos = establecimientoService.findAllEstablecimientos();
+
+        // Agregar la lista al modelo para que se pueda acceder en la vista
+        model.addAttribute("establecimientos", establecimientos);
+
+        // Retornar la vista (puede ser un archivo HTML o Thymeleaf, según tu implementación)
+        return "listaEstablecimientos";  // Aquí "establecimientos" es el nombre de la vista que muestra los establecimientos
+    }
 }

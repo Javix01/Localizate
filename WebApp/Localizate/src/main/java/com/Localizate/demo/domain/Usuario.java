@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,30 +14,48 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Usuario {
-	
-	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    private Long id;
 
-    private String nombre;
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Direccion> direcciones = new ArrayList<>();
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String nombre;
+
+    @Column(nullable = false)
+    private String role; // ADMIN, USER
 	
 	public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-    // Getters y setters
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getNombre() {
@@ -47,20 +66,18 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-	public List<Direccion> getDirecciones() {
-		return direcciones;
+	public String getRole() {
+		return role;
 	}
 
-	public void setDirecciones(List<Direccion> direcciones) {
-		this.direcciones = direcciones;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
-	//equality
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(email, id, nombre, password, role);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -71,25 +88,14 @@ public class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(password, other.password)
+				&& Objects.equals(role, other.role);
 	}
 
-	// To string
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", "
-				+ "nombre=" + nombre + ", "
-			    + "email=" + email + "]";
-				//+ ", total de direcciones=" + direcciones.size() + "]";
-	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
+		return "Usuario [id=" + id + ", email=" + email + ", password=" + password + ", nombre=" + nombre + ", role="
+				+ role + "]";
 	}
 }

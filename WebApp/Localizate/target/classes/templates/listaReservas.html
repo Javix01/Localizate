@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Lista de Reservas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Reservas para <span th:text="${establecimiento.nombre}"></span></h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre Cliente</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Fecha y Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+			    <tr th:each="reserva : ${reservas}">
+			        <td th:text="${reserva.cliente}"></td>
+			        <td th:text="${reserva.hora}"></td>
+			        <td th:text="${#dates.format(reserva.fecha, 'dd/MM/yyyy')}"></td>
+			    </tr>
+			</tbody>
+        </table>
+        <a th:href="@{/listarEstablecimientos}" class="btn btn-primary mt-3">Volver a Establecimientos</a>
+    </div>
+</body>
+</html>

@@ -1,20 +1,16 @@
 package com.Localizate.demo.services;
 
-import java.util.List;
 import java.util.Optional;
-
 import com.Localizate.demo.domain.Usuario;
 
-
 public interface UsuarioService {
-	
-	public List <Usuario> findAllUsers();
 
-	public void crearUsuario(Usuario usuario);
-	public void actualizarUsuario(Usuario usuario);
+    // Método para registrar un nuevo usuario
+    Usuario registrarUsuario(Usuario usuario);
 
-	public Optional <Usuario> findUsuarioById(Long id);
+    // Método para autenticar un usuario
+    Optional<Usuario> autenticarUsuario(String email, String password);
 
-	public void deleteUsuarioById(Long id);
-
+    // Método para verificar si un email ya está registrado
+    boolean existeUsuarioConEmail(String email);
 }

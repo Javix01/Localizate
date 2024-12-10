@@ -29,6 +29,9 @@
                     <strong>Reseña:</strong> <span th:text="${establecimiento.reseña}"></span><br>
                     <strong>Tipo de Establecimiento:</strong> <span th:text="${establecimiento.tipoEstablecimiento}"></span>
                 </p>
+                <a th:if="${establecimiento.admiteReservas}" 
+					   th:href="@{/reservas/nuevo/{idEstablecimiento}(idEstablecimiento=${establecimiento.id})}" 
+					   class="btn btn-primary mt-3">Reservar</a>
             </div>
         </div>
 

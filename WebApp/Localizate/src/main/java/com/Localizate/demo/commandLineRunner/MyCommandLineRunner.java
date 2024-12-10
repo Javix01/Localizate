@@ -3,24 +3,33 @@ package com.Localizate.demo.commandLineRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.Localizate.demo.domain.Direccion;
 import com.Localizate.demo.domain.Establecimiento;
 import com.Localizate.demo.domain.Usuario;
-import com.Localizate.demo.repositories.DireccionRepository;
 import com.Localizate.demo.repositories.EstablecimientoRepository;
 import com.Localizate.demo.repositories.UsuarioRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.Localizate.demo.domain.Reserva;
+import com.Localizate.demo.repositories.ReservaRepository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
-    private final DireccionRepository direccionRepository;
     private final EstablecimientoRepository establecimientoRepository;
+    private final ReservaRepository reservaRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public MyCommandLineRunner(UsuarioRepository usuarioRepository, DireccionRepository direccionRepository, EstablecimientoRepository establecimientoRepository) {
+    public MyCommandLineRunner(UsuarioRepository usuarioRepository,
+                                EstablecimientoRepository establecimientoRepository,
+                                ReservaRepository reservaRepository,
+                                BCryptPasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
-        this.direccionRepository = direccionRepository;
         this.establecimientoRepository = establecimientoRepository;
+        this.reservaRepository = reservaRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -30,39 +39,16 @@ public class MyCommandLineRunner implements CommandLineRunner {
     }
 
     void poblarBD() {
-        // Crear el usuario
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Luiky");
-        usuario.setEmail("luiky@unex.es");
-
+        // Crear el primer usuario con contraseña encriptada
+        Usuario usuario1 = new Usuario();
+        usuario1.setNombre("Luiky");
+        usuario1.setEmail("luiky@unex.es");
+        usuario1.setPassword(passwordEncoder.encode("password123")); // Contraseña encriptada
+        usuario1.setRole("ADMIN");
         // Guardar el usuario
-        Usuario usuarioSaved = usuarioRepository.save(usuario);
+        Usuario usuario1Saved = usuarioRepository.save(usuario1);
 
-        // Crear las direcciones
-        Direccion direccion1 = new Direccion();
-        direccion1.setCalle("Calle 1");
-        direccion1.setCiudad("Ciudad 1");
-        direccion1.setCodigoPostal(1);
-        direccion1.setUsuario(usuarioSaved);
-
-        Direccion direccion2 = new Direccion();
-        direccion2.setCalle("Calle 2");
-        direccion2.setCiudad("Ciudad 2");
-        direccion2.setCodigoPostal(2);
-        direccion2.setUsuario(usuarioSaved);
-
-        // Guardar las direcciones
-        Direccion direccion1Saved = direccionRepository.save(direccion1);
-        Direccion direccion2Saved = direccionRepository.save(direccion2);
-
-        // Asignar direcciones al usuario
-        usuarioSaved.getDirecciones().add(direccion1Saved);
-        usuarioSaved.getDirecciones().add(direccion2Saved);
-
-        // Persistir el usuario
-        usuarioSaved = usuarioRepository.save(usuarioSaved);
-
-        // Crear establecimientos para el usuario
+        // Crear establecimientos para el primer usuario
         Establecimiento establecimiento1 = new Establecimiento();
         establecimiento1.setNombre("Restaurante La Plaza");
         establecimiento1.setLocalizacion("40.416775, -3.703790");
@@ -73,7 +59,8 @@ public class MyCommandLineRunner implements CommandLineRunner {
         establecimiento1.setWeb("www.laplaza.com");
         establecimiento1.setReseña(4.5f);
         establecimiento1.setTipoEstablecimiento("Restaurante");
-        establecimiento1.setUsuario(usuarioSaved);
+        establecimiento1.setAdmiteReservas(true);
+        establecimiento1.setUsuario(usuario1Saved);
 
         Establecimiento establecimiento2 = new Establecimiento();
         establecimiento2.setNombre("Bar Los Amigos");
@@ -85,29 +72,30 @@ public class MyCommandLineRunner implements CommandLineRunner {
         establecimiento2.setWeb("www.losamigos.com");
         establecimiento2.setReseña(4.2f);
         establecimiento2.setTipoEstablecimiento("Bar");
-        establecimiento2.setUsuario(usuarioSaved);
+        establecimiento2.setAdmiteReservas(true);
+        establecimiento2.setUsuario(usuario1Saved);
 
         // Guardar establecimientos
         establecimientoRepository.save(establecimiento1);
         establecimientoRepository.save(establecimiento2);
 
+     // Crear una reserva para establecimiento1
+        Reserva reserva1 = new Reserva();
+        reserva1.setFecha(LocalDate.of(2024, 12, 20));  // Fecha de la reserva
+        reserva1.setHora("20:00");  // Hora de la reserva
+        reserva1.setCliente("Luiky");
+        reserva1.setEstablecimiento(establecimiento1);  // Relación con el establecimiento
+
+        // Guardar reserva
+        reservaRepository.save(reserva1);
+
         // ---- Crear el segundo usuario y sus datos
         Usuario usuario2 = new Usuario();
         usuario2.setNombre("Pedro");
         usuario2.setEmail("pedro@unex.es");
-
+        usuario2.setPassword(passwordEncoder.encode("securePassword")); // Contraseña encriptada
+        usuario2.setRole("USER");
         Usuario usuario2Saved = usuarioRepository.save(usuario2);
-
-        Direccion direccion3 = new Direccion();
-        direccion3.setCalle("Calle 3");
-        direccion3.setCiudad("Ciudad 3");
-        direccion3.setCodigoPostal(3);
-        direccion3.setUsuario(usuario2Saved);
-
-        Direccion direccion3Saved = direccionRepository.save(direccion3);
-
-        usuario2Saved.getDirecciones().add(direccion3Saved);
-        usuario2Saved = usuarioRepository.save(usuario2Saved);
 
         Establecimiento establecimiento3 = new Establecimiento();
         establecimiento3.setNombre("Hotel Luna");
@@ -119,11 +107,23 @@ public class MyCommandLineRunner implements CommandLineRunner {
         establecimiento3.setWeb("www.hotelluna.com");
         establecimiento3.setReseña(4.8f);
         establecimiento3.setTipoEstablecimiento("Hotel");
+        establecimiento3.setAdmiteReservas(true);
         establecimiento3.setUsuario(usuario2Saved);
 
         // Guardar establecimiento
         establecimientoRepository.save(establecimiento3);
 
-        System.out.println("Datos de prueba para usuarios, direcciones y establecimientos creados exitosamente.");
+     // Crear una reserva para establecimiento3
+        Reserva reserva2 = new Reserva();
+        reserva2.setFecha(LocalDate.of(2024, 12, 25));  // Fecha de la reserva
+        reserva2.setHora("18:30");  // Hora de la reserva
+        reserva2.setCliente("Pedro");
+        reserva2.setEstablecimiento(establecimiento3);  // Relación con el establecimiento
+
+
+        // Guardar reserva
+        reservaRepository.save(reserva2);
+
+        System.out.println("Datos de prueba para usuarios, establecimientos y reservas creados exitosamente.");
     }
 }
