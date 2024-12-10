@@ -30,9 +30,25 @@ public class EstablecimientoController {
     }
 
     @PostMapping("/guardarEstablecimiento")
-    public String guardarEstablecimiento(Establecimiento establecimiento) {
-        establecimientoService.crearEstablecimiento(establecimiento);
-        return "redirect:/listEstablecimientos";
+    public String guardarEstablecimiento(@ModelAttribute Establecimiento establecimiento, Model model) {
+        try {
+            // Validaciones simples
+            if (establecimiento.getNombre() == null || establecimiento.getNombre().isEmpty()) {
+                throw new IllegalArgumentException("El nombre no puede estar vacío.");
+            }
+            if (establecimiento.getCiudad() == null || establecimiento.getCiudad().isEmpty()) {
+                throw new IllegalArgumentException("La ciudad no puede estar vacía.");
+            }
+
+            // Si las validaciones pasan, guardar el establecimiento
+            establecimientoService.crearEstablecimiento(establecimiento);
+            return "redirect:/listEstablecimientos";
+        } catch (IllegalArgumentException e) {
+            // Enviar mensaje de error y los datos al modelo
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("establecimiento", establecimiento);  // Para mantener los datos introducidos
+            return "addEstablecimiento";  // Redirigir a la página de agregar establecimiento con error
+        }
     }
 
     @GetMapping("/actualizarEstablecimiento/{id}")
@@ -43,9 +59,25 @@ public class EstablecimientoController {
     }
 
     @PostMapping("/actualizarEstablecimiento/{id}")
-    public String actualizarEstablecimiento(@PathVariable Long id, @ModelAttribute Establecimiento establecimiento) {
-        establecimientoService.actualizarEstablecimiento(establecimiento);
-        return "redirect:/listEstablecimientos";
+    public String actualizarEstablecimiento(@PathVariable Long id, @ModelAttribute Establecimiento establecimiento, Model model) {
+        try {
+            // Validaciones simples
+            if (establecimiento.getNombre() == null || establecimiento.getNombre().isEmpty()) {
+                throw new IllegalArgumentException("El nombre no puede estar vacío.");
+            }
+            if (establecimiento.getCiudad() == null || establecimiento.getCiudad().isEmpty()) {
+                throw new IllegalArgumentException("La ciudad no puede estar vacía.");
+            }
+
+            // Si la validación pasa, actualizar el establecimiento
+            establecimientoService.actualizarEstablecimiento(establecimiento);
+            return "redirect:/listEstablecimientos";
+        } catch (IllegalArgumentException e) {
+            // Enviar mensaje de error a la página si la validación falla
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("establecimiento", establecimiento);  // Volver a mostrar los datos introducidos
+            return "actualizarEstablecimiento";  // Volver a la misma página con el error
+        }
     }
 
     @DeleteMapping("/deleteEstablecimiento/{id}")
@@ -53,7 +85,7 @@ public class EstablecimientoController {
         establecimientoService.deleteEstablecimientoById(id);
         return "redirect:/listEstablecimientos";
     }
-    
+
     @GetMapping("/buscarEstablecimientos")
     public String buscarEstablecimientos(
             @RequestParam(required = false) String nombre,
@@ -77,12 +109,12 @@ public class EstablecimientoController {
     
     @GetMapping("/detallesEstablecimiento/{id}")
     public String verDetallesEstablecimiento(@PathVariable Long id, Model model) {
-    	model.addAttribute("establecimiento", establecimientoService.findEstablecimientoById(id).orElseThrow(() -> 
+        model.addAttribute("establecimiento", establecimientoService.findEstablecimientoById(id).orElseThrow(() -> 
         new IllegalArgumentException("Establecimiento no encontrado")));
         return "detallesEstablecimiento"; // Nombre del template
     }
-    
- // Endpoint para ver la lista de establecimientos
+
+    // Endpoint para ver la lista de establecimientos
     @GetMapping("/establecimientos")
     public String listarEstablecimientos(Model model) {
         // Obtener la lista de todos los establecimientos

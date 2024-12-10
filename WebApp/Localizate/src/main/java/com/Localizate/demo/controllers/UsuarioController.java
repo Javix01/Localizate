@@ -1,7 +1,6 @@
 package com.Localizate.demo.controllers;
 
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,8 @@ public class UsuarioController {
         // Verificar si el email ya está en uso
         if (usuarioService.existeUsuarioConEmail(usuario.getEmail())) {
             model.addAttribute("error", "El email ya está en uso.");
-            return "registro";
+            model.addAttribute("usuario", usuario);  // Mantener los datos ya ingresados
+            return "registro";  // Volver al formulario con el mensaje de error
         }
 
         // Verificar si el usuario tiene un rol asignado

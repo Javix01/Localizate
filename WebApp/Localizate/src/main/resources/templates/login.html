@@ -7,17 +7,29 @@
 <body>
     <div class="container mt-5">
         <h2>Iniciar Sesión</h2>
+
+        <!-- Mensaje de credenciales incorrectas -->
+        <div th:if="${param.error != null}" class="alert alert-danger">
+            Credenciales incorrectas. Por favor, inténtalo de nuevo.
+        </div>
+        
+        <!-- Mensaje de cierre de sesión exitoso -->
+        <div th:if="${param.logout != null}" class="alert alert-success">
+            Has cerrado sesión correctamente.
+        </div>
+
         <form th:action="@{/login}" method="post">
             <div class="form-group">
                 <label for="username">Correo Electrónico</label>
-                <input type="text" id="username" name="username" class="form-control" required>
+                <input type="text" id="username" name="username" class="form-control" required placeholder="Introduce tu email">
             </div>
             <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                <input type="password" id="password" name="password" class="form-control" required placeholder="Introduce tu contraseña">
             </div>
             <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
         </form>
+        
         <p class="mt-3">¿No tienes cuenta? <a th:href="@{/registro}">Regístrate</a>.</p>
     </div>
 </body>

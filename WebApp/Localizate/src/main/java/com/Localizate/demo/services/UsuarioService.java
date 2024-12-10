@@ -1,6 +1,8 @@
 package com.Localizate.demo.services;
 
 import java.util.Optional;
+
+import com.Localizate.demo.domain.Direccion;
 import com.Localizate.demo.domain.Usuario;
 
 public interface UsuarioService {
@@ -13,4 +15,6 @@ public interface UsuarioService {
 
     // Método para verificar si un email ya está registrado
     boolean existeUsuarioConEmail(String email);
+
+	Optional<Usuario> findUsuarioById(Long usuarioId);
 }
