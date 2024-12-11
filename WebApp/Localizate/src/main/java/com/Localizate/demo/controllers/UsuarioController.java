@@ -19,7 +19,6 @@ import com.Localizate.demo.services.EstablecimientoService;
 import com.Localizate.demo.services.UsuarioService;
 import com.Localizate.demo.domain.Establecimiento;
 
-
 @Controller
 public class UsuarioController {
 
@@ -39,13 +38,22 @@ public class UsuarioController {
      */
     @GetMapping("/verUsuario")
     public String verUsuario(Model model) {
-        Usuario usuarioLogueado = usuarioService.obtenerUsuarioLogueado();  // Obtener el usuario logueado
+        // Obtener el usuario logueado
+        Usuario usuarioLogueado = usuarioService.obtenerUsuarioLogueado();  
         model.addAttribute("usuario", usuarioLogueado);
-        
-     // Obtener la lista de establecimientos asociados al usuario
-        List<Establecimiento> listaEstablecimientos = establecimientoService.findAllEstablecimientos();
+
+        List<Establecimiento> listaEstablecimientos;
+
+        // Verificar si el usuario tiene el rol ADMIN
+        if ("ADMIN".equals(usuarioLogueado.getRole())) {
+            // Si es ADMIN, mostrar todos los establecimientos
+            listaEstablecimientos = establecimientoService.findAllEstablecimientos();
+        } else {
+            // Si no es ADMIN, mostrar solo los establecimientos asociados al usuario
+            listaEstablecimientos = establecimientoService.findEstablecimientosByUsuarioId(usuarioLogueado.getId());
+        }
+
         model.addAttribute("listaEstablecimientos", listaEstablecimientos);
-        
         return "verUsuario";  // Vista que muestra la información del usuario
     }
 
@@ -112,7 +120,7 @@ public class UsuarioController {
 
             // Si se ha proporcionado una nueva contraseña, actualizarla
             if (usuarioFormulario.getPassword() != null && !usuarioFormulario.getPassword().isEmpty()) {
-            	String encodedPassword = passwordEncoder.encode(usuarioFormulario.getPassword());  // Cifra la nueva contraseña
+                String encodedPassword = passwordEncoder.encode(usuarioFormulario.getPassword());  // Cifra la nueva contraseña
                 usuarioLogueado.setPassword(encodedPassword);  // Asigna la contraseña cifrada
             }
 

@@ -6,15 +6,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import com.Localizate.demo.domain.Establecimiento;
+import com.Localizate.demo.domain.Usuario;
 import com.Localizate.demo.services.EstablecimientoService;
+import com.Localizate.demo.services.UsuarioService;
 
 @Controller
 public class EstablecimientoController {
 
-    private final EstablecimientoService establecimientoService;
-    
-    public EstablecimientoController(EstablecimientoService establecimientoService) {
+	private final EstablecimientoService establecimientoService;
+    private final UsuarioService usuarioService;
+
+    public EstablecimientoController(EstablecimientoService establecimientoService, UsuarioService usuarioService) {
         this.establecimientoService = establecimientoService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping("/listEstablecimientos")
@@ -32,7 +36,14 @@ public class EstablecimientoController {
     @PostMapping("/guardarEstablecimiento")
     public String guardarEstablecimiento(@ModelAttribute Establecimiento establecimiento, Model model) {
         try {
-            // Validaciones simples
+            Usuario usuarioLogueado = usuarioService.obtenerUsuarioLogueado();
+
+            if (usuarioLogueado == null) {
+                throw new IllegalStateException("No se encontró el usuario logueado.");
+            }
+
+            establecimiento.setUsuario(usuarioLogueado);
+
             if (establecimiento.getNombre() == null || establecimiento.getNombre().isEmpty()) {
                 throw new IllegalArgumentException("El nombre no puede estar vacío.");
             }
@@ -40,14 +51,12 @@ public class EstablecimientoController {
                 throw new IllegalArgumentException("La ciudad no puede estar vacía.");
             }
 
-            // Si las validaciones pasan, guardar el establecimiento
             establecimientoService.crearEstablecimiento(establecimiento);
-            return "redirect:/listEstablecimientos";
-        } catch (IllegalArgumentException e) {
-            // Enviar mensaje de error y los datos al modelo
+            return "redirect:/verUsuario";
+        } catch (IllegalArgumentException | IllegalStateException e) {
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("establecimiento", establecimiento);  // Para mantener los datos introducidos
-            return "addEstablecimiento";  // Redirigir a la página de agregar establecimiento con error
+            model.addAttribute("establecimiento", establecimiento);
+            return "addEstablecimiento";
         }
     }
 
@@ -69,7 +78,14 @@ public class EstablecimientoController {
                 throw new IllegalArgumentException("La ciudad no puede estar vacía.");
             }
 
-            // Si la validación pasa, actualizar el establecimiento
+            // Recuperar el establecimiento existente
+            Establecimiento existente = establecimientoService.findEstablecimientoById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Establecimiento no encontrado"));
+
+            // Mantener el usuario creador
+            establecimiento.setUsuario(existente.getUsuario());
+
+            // Actualizar el establecimiento con los nuevos datos, manteniendo el creador original
             establecimientoService.actualizarEstablecimiento(establecimiento);
             return "redirect:/listEstablecimientos";
         } catch (IllegalArgumentException e) {
@@ -80,10 +96,18 @@ public class EstablecimientoController {
         }
     }
 
-    @DeleteMapping("/deleteEstablecimiento/{id}")
-    public String deleteEstablecimiento(@PathVariable Long id) {
-        establecimientoService.deleteEstablecimientoById(id);
-        return "redirect:/listEstablecimientos";
+
+    // Método para eliminar un establecimiento
+    @PostMapping("/eliminarEstablecimiento/{id}")
+    public String eliminarEstablecimiento(@PathVariable Long id, Model model) {
+        try {
+            // Llamar al servicio para eliminar el establecimiento
+            establecimientoService.eliminarEstablecimiento(id);
+            return "redirect:/verUsuario";  // Redirigir a la vista de usuario después de la eliminación
+        } catch (Exception e) {
+            model.addAttribute("error", "No se pudo eliminar el establecimiento.");
+            return "verUsuario";  // Regresar con error si algo salió mal
+        }
     }
 
     @GetMapping("/buscarEstablecimientos")
