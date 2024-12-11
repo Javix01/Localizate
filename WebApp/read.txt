@@ -17,3 +17,6 @@ Ahora desde la reserva se puede volver sin problema, si se pulsa el menu estable
 
 11/12/2024 13:07
 Se ha añadido un apartado para que el usuario pueda consultar sus datos y modificarlos. actualmente el campo telefono no se edita, se trabajara en esto y en añadir que un usuario se pueda eliminar a si mismo (pero despues de hacer la parte de entregar permisos de editores a quien creo el local).
+
+11/12/2024 14:08
+Se han solucionado los errores a la hora de modificar algunos campos de la edición del usuario, como era el telefono y la contraseña, la cual no se cifraba y hacia imposible aceder a la web una vez se cerraba sesión. Proxima linea de actuación: Hacer que en ese apartado el usuario pueda ver los establecimientos que el incluyo en la web y los pueda editar o eliminar, mientras que en la pagina principal se veran todos los establecimientos pero ya sin boton de edición y eliminar.
