@@ -14,3 +14,6 @@ Se ha mejorado el sistema de login y registro, haciendo que den mensajes dependi
 
 11/12/2024 00:54
 Ahora desde la reserva se puede volver sin problema, si se pulsa el menu estableciemiento y el logo se vuelve a la lista de establecimientos.
+
+11/12/2024 13:07
+Se ha añadido un apartado para que el usuario pueda consultar sus datos y modificarlos. actualmente el campo telefono no se edita, se trabajara en esto y en añadir que un usuario se pueda eliminar a si mismo (pero despues de hacer la parte de entregar permisos de editores a quien creo el local).
