@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mis Reservas</title>
+</head>
+<body>
+    <h1>Mis Reservas</h1>
+
+    <!-- Mostrar el mensaje de éxito si existe -->
+    <div th:if="${mensajeExito}">
+        <p th:text="${mensajeExito}"></p>
+    </div>
+
+    <!-- Mostrar las reservas -->
+    <div th:if="${reservas}">
+        <table>
+            <thead>
+                <tr>
+                    <th>Establecimiento</th>
+                    <th>Fecha de Reserva</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="reserva : ${reservas}">
+                    <td th:text="${reserva.establecimiento.nombre}"></td>
+                    <td th:text="${reserva.fechaReserva}"></td>
+                    <td>
+                        <!-- Puedes añadir opciones como eliminar o ver detalles -->
+                        <a href="#" th:href="@{/reservas/eliminar/{id}(id=${reserva.id})}">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Si no hay reservas -->
+    <div th:if="${#lists.isEmpty(reservas)}">
+        <p>No tienes reservas.</p>
+    </div>
+</body>
+</html>

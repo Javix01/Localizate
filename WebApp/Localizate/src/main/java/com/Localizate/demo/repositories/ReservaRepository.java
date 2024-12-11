@@ -9,4 +9,13 @@ import com.Localizate.demo.domain.Reserva;
 
 public interface ReservaRepository extends CrudRepository<Reserva, Long> {
     List<Reserva> findByEstablecimientoId(Long establecimientoId);
+    
+    List<Reserva> findByUsuarioId(Long usuarioId);
+    
+    List<Reserva> findReservasByUsuario_Nombre(String nombre);
+    
+    List<Reserva> findByUsuario_Email(String email);
+    
+    public List<Reserva> findByCliente(String cliente);
+
 }

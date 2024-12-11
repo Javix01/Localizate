@@ -25,8 +25,8 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public Reserva guardarReserva(Reserva reserva) {
-        return reservaRepository.save(reserva);
+    public void guardarReserva(Reserva reserva) {
+        reservaRepository.save(reserva); // Guarda la reserva en la base de datos
     }
 
     @Override
@@ -37,5 +37,15 @@ public class ReservaServiceImpl implements ReservaService {
     @Override
     public void eliminarReservaById(Long id) {
         reservaRepository.deleteById(id);
+    }
+    
+    @Override
+    public List<Reserva> getReservasPorUsuario(Long usuarioId) {
+        return reservaRepository.findByUsuarioId(usuarioId);
+    }
+    
+    @Override
+    public List<Reserva> findReservasByUsuario(String email) {
+    	return reservaRepository.findByCliente(email); // Esto busca las reservas del usuario por email
     }
 }

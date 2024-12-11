@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Mis Datos</title>
+    
+    <!-- Agregar las referencias a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Agregar las referencias a Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+    <!-- Menú de navegación (igual que antes) -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/listEstablecimientos">
+                <img src="../static/images/logo.jpeg" alt="Logo" class="logo-image">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/listEstablecimientos">Establecimientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/reservas/misReservas}">Mis Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/verMisDatos}">Mis Datos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-5">
+        <h2>Mis Datos</h2>
+        
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Información del Usuario</h5>
+                <p class="card-text"><strong>Nombre:</strong> <span th:text="${usuario.nombre}"></span></p>
+                <p class="card-text"><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+                <p class="card-text"><strong>Rol:</strong> <span th:text="${usuario.role}"></span></p>
+                <p class="card-text"><strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span></p>
+                
+                <!-- Botón para actualizar los datos del usuario -->
+                <a th:href="@{/actualizarUsuario/{id}(id=${usuario.id})}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Actualizar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agregar las referencias a Bootstrap JS y Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

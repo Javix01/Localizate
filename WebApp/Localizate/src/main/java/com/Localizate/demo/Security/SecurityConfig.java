@@ -13,9 +13,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                // Rutas permitidas para todos los usuarios
+                // Rutas públicas
                 .requestMatchers("/login", "/registro", "/css/**", "/js/**", "/images/**", "/listarEstablecimientos").permitAll()
-                // Cualquier otra solicitud requiere autenticación
+                // Rutas protegidas
+                .requestMatchers("/reservas/misReservas").authenticated()
+                // Proteger cualquier otra solicitud
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -28,7 +30,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/login?logout") // Redirección después del cierre de sesión
                 .permitAll()
             )
-            .csrf().disable(); // Deshabilita CSRF para pruebas; habilitarlo en producción
+            .csrf().disable(); // Deshabilitar CSRF para pruebas; habilitarlo en producción
         return http.build();
     }
 

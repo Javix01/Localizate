@@ -25,7 +25,7 @@ public interface ReservaService {
      * @param reserva Objeto de la reserva a guardar.
      * @return Reserva guardada.
      */
-    Reserva guardarReserva(Reserva reserva);
+    void guardarReserva(Reserva reserva);
 
     /**
      * Obtiene una reserva por su ID.
@@ -41,4 +41,8 @@ public interface ReservaService {
      * @param id ID de la reserva a eliminar.
      */
     void eliminarReservaById(Long id);
+    
+    List<Reserva> getReservasPorUsuario(Long usuarioId);
+    
+    List<Reserva> findReservasByUsuario(String email);
 }

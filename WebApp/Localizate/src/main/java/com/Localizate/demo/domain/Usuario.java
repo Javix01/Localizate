@@ -29,7 +29,12 @@ public class Usuario {
 
     @Column(nullable = false)
     private String role; // ADMIN, USER
-	
+    
+    @OneToMany(mappedBy = "usuario")
+    private List<Reserva> reservas = new ArrayList<>();
+    
+    private String telefono;
+    
 	public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
@@ -74,9 +79,25 @@ public class Usuario {
 		this.role = role;
 	}
 
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, id, nombre, password, role);
+		return Objects.hash(email, id, nombre, password, reservas, role);
 	}
 
 	@Override
@@ -90,12 +111,12 @@ public class Usuario {
 		Usuario other = (Usuario) obj;
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
 				&& Objects.equals(nombre, other.nombre) && Objects.equals(password, other.password)
-				&& Objects.equals(role, other.role);
+				&& Objects.equals(reservas, other.reservas) && Objects.equals(role, other.role);
 	}
 
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", email=" + email + ", password=" + password + ", nombre=" + nombre + ", role="
-				+ role + "]";
+				+ role + ", reservas=" + reservas + "]";
 	}
 }

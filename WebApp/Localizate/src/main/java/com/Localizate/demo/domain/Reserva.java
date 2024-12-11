@@ -20,8 +20,8 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne // Relación con el establecimiento
-    @JoinColumn(name = "establecimiento_id", nullable = false)
+	@ManyToOne(optional = false) // Si es obligatorio
+    @JoinColumn(name = "establecimiento_id", nullable = false) // Columna en la base de datos
     private Establecimiento establecimiento;
 
     @Column(nullable = false)
@@ -32,8 +32,11 @@ public class Reserva {
 
     @Column(nullable = false)
     private String hora;
+    
+    @ManyToOne
+    private Usuario usuario;
 
-	public Long getId() {
+    public Long getId() {
 		return id;
 	}
 
@@ -73,9 +76,17 @@ public class Reserva {
 		this.hora = hora;
 	}
 
+	public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cliente, establecimiento, fecha, hora, id);
+		return Objects.hash(cliente, establecimiento, fecha, hora, id, usuario);
 	}
 
 	@Override
@@ -89,12 +100,12 @@ public class Reserva {
 		Reserva other = (Reserva) obj;
 		return Objects.equals(cliente, other.cliente) && Objects.equals(establecimiento, other.establecimiento)
 				&& Objects.equals(fecha, other.fecha) && Objects.equals(hora, other.hora)
-				&& Objects.equals(id, other.id);
+				&& Objects.equals(id, other.id) && Objects.equals(usuario, other.usuario);
 	}
 
 	@Override
 	public String toString() {
 		return "Reserva [id=" + id + ", establecimiento=" + establecimiento + ", cliente=" + cliente + ", fecha="
-				+ fecha + ", hora=" + hora + "]";
+				+ fecha + ", hora=" + hora + ", usuario=" + usuario + "]";
 	}
 }

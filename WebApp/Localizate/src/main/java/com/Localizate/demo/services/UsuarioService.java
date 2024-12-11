@@ -15,4 +15,18 @@ public interface UsuarioService {
     boolean existeUsuarioConEmail(String email);
 
 	Optional<Usuario> findUsuarioById(Long usuarioId);
+	
+	public Optional<Usuario> getUsuarioById(Long id);
+	
+	public Usuario updateUsuario(Long id, Usuario updatedUsuario);
+	
+	public void deleteUsuario(Long id);
+	
+	public void actualizarUsuario(Usuario usuario);
+
+	public void deleteUsuarioById(Long id);
+	
+	public Usuario obtenerUsuarioLogueado();
+	
+	public Usuario obtenerUsuarioPorId(Long id);
 }
