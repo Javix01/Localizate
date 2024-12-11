@@ -24,3 +24,6 @@ Se han solucionado los errores a la hora de modificar algunos campos de la edici
 11/12/2024 16:48
 Se han modificado la tabla de la pestaña donde aparecen todos los establecimientos, ahora ya no se puede ni modificar ni eleiminar, solo se pueden ver y al pulsar en el nombre te muestra toda la información de la misma. Ahora la gestión de establecimientos se hace desde la pestaña "mis datos" (verUsuario.html), donde solo queda que muestre a cada usuario los establecimientos que ha creado para que pueda gestionarlos, es decir, editarlos o eliminarlos. Desde la pestaña mis datos se puede añadir establecimientos tambien.
 Una vez se realice lo anterior se propone crear un boton el cual sirva al usuario para crear reservas en su establecimiento y desde el boton de reservar que hay dentro de cada pestaña de establecimeinto permitir que se aceda a la lista del mismo y el usuario final haga una reserva de un espacio predefinido la cual aparecera en la pestaña "Mis Reservas" desde en una ultima fase aparecera un boton desde el que se realizaran reseñas del establecimiento.
+
+11/12/20:08
+Se ha solucionado que los usuarios solo puedan ver sus establecimientos (a no ser que sean admins, que podrán ver todos) y además se ha empezado el proceso de borrar establecimientos, aunque ahora mismo da problemas.
