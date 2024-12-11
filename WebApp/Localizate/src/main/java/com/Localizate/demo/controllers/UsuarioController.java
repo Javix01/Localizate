@@ -93,9 +93,6 @@ public class UsuarioController {
             if (usuarioFormulario.getNombre() != null && !usuarioFormulario.getNombre().equals(usuarioLogueado.getNombre())) {
                 usuarioLogueado.setNombre(usuarioFormulario.getNombre());
             }
-            if (usuarioFormulario.getEmail() != null && !usuarioFormulario.getEmail().equals(usuarioLogueado.getEmail())) {
-                usuarioLogueado.setEmail(usuarioFormulario.getEmail());
-            }
             
             if (usuarioFormulario.getTelefono() != null && !usuarioFormulario.getTelefono().equals(usuarioLogueado.getTelefono())) {
                 usuarioLogueado.setTelefono(usuarioFormulario.getTelefono());
