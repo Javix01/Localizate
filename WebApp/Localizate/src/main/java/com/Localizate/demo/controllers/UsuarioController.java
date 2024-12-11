@@ -1,5 +1,7 @@
 package com.Localizate.demo.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,18 +15,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.Localizate.demo.domain.Usuario;
+import com.Localizate.demo.services.EstablecimientoService;
 import com.Localizate.demo.services.UsuarioService;
+import com.Localizate.demo.domain.Establecimiento;
+
 
 @Controller
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final EstablecimientoService establecimientoService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService, BCryptPasswordEncoder passwordEncoder) {
+    public UsuarioController(UsuarioService usuarioService, BCryptPasswordEncoder passwordEncoder, EstablecimientoService establecimientoService) {
         this.usuarioService = usuarioService;
         this.passwordEncoder = passwordEncoder;
+        this.establecimientoService = establecimientoService;
     }
 
     /**
@@ -34,6 +41,11 @@ public class UsuarioController {
     public String verUsuario(Model model) {
         Usuario usuarioLogueado = usuarioService.obtenerUsuarioLogueado();  // Obtener el usuario logueado
         model.addAttribute("usuario", usuarioLogueado);
+        
+     // Obtener la lista de establecimientos asociados al usuario
+        List<Establecimiento> listaEstablecimientos = establecimientoService.findAllEstablecimientos();
+        model.addAttribute("listaEstablecimientos", listaEstablecimientos);
+        
         return "verUsuario";  // Vista que muestra la información del usuario
     }
 

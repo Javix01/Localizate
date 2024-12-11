@@ -49,7 +49,6 @@
                 <p class="card-text"><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
                 <p class="card-text"><strong>Rol:</strong> <span th:text="${usuario.role}"></span></p>
                 <p class="card-text"><strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span></p>
-                <p class="card-text"><strong>Contraseña:</strong> <span th:text="${usuario.password}"></span></p>
                 
                 <!-- Botón para actualizar los datos del usuario -->
                 <a th:href="@{/actualizarUsuario/{id}(id=${usuario.id})}" class="btn btn-warning">
@@ -57,6 +56,64 @@
                 </a>
             </div>
         </div>
+    </div>
+    
+    <div class="container mt-5">
+        <h2>Mis Establecimientos</h2>
+                
+        <!-- Utilizar las clases de Bootstrap para la tabla principal -->
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Calle</th>
+                    <th>Ciudad</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Web</th>
+                    <th>Reseña</th>
+                    <th>Tipo</th>
+                    <th>Editar</th>
+                    <th>Borrar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterar sobre la lista de establecimientos -->
+                <tr th:each="establecimiento : ${listaEstablecimientos}">
+                    <td>
+                        <!-- Enlace para ver los detalles del establecimiento -->
+                        <a th:href="@{/detallesEstablecimiento/{id}(id=${establecimiento.id})}" th:text="${establecimiento.nombre}"></a>
+                    </td>
+                    <td th:text="${establecimiento.calle}">Calle</td>
+                    <td th:text="${establecimiento.ciudad}">Ciudad</td>
+                    <td th:text="${establecimiento.email}">Email</td>
+                    <td th:text="${establecimiento.telefono}">Teléfono</td>
+                    <td>
+                        <a th:href="${establecimiento.web}" target="_blank" th:text="${establecimiento.web}">Web</a>
+                    </td>
+                    <td th:text="${establecimiento.reseña}">Reseña</td>
+                    <td th:text="${establecimiento.tipoEstablecimiento}">Tipo</td>
+                    <td>
+                        <!-- Botón Editar (para establecimiento) -->
+                        <a th:href="@{/actualizarEstablecimiento/{id}(id=${establecimiento.id})}" class="btn btn-warning">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <!-- Formulario para eliminar establecimiento -->
+                        <form action="#" th:action="@{/deleteEstablecimiento/{id}(id=${establecimiento.id})}" th:method="delete">
+                            <button type="submit" class="btn btn-danger">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Botón Añadir Establecimiento -->
+        <a th:href="@{/addEstablecimiento}" class="btn btn-success mb-3">
+            <i class="fas fa-plus"></i> Añadir Establecimiento
+        </a>
     </div>
 
     <!-- Agregar las referencias a Bootstrap JS y Popper.js -->
