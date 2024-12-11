@@ -49,6 +49,7 @@
                 <p class="card-text"><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
                 <p class="card-text"><strong>Rol:</strong> <span th:text="${usuario.role}"></span></p>
                 <p class="card-text"><strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span></p>
+                <p class="card-text"><strong>Contraseña:</strong> <span th:text="${usuario.password}"></span></p>
                 
                 <!-- Botón para actualizar los datos del usuario -->
                 <a th:href="@{/actualizarUsuario/{id}(id=${usuario.id})}" class="btn btn-warning">

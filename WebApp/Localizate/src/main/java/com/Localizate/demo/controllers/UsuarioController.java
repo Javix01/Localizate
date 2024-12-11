@@ -3,6 +3,7 @@ package com.Localizate.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,10 +19,12 @@ import com.Localizate.demo.services.UsuarioService;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, BCryptPasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -93,10 +96,15 @@ public class UsuarioController {
             if (usuarioFormulario.getEmail() != null && !usuarioFormulario.getEmail().equals(usuarioLogueado.getEmail())) {
                 usuarioLogueado.setEmail(usuarioFormulario.getEmail());
             }
+            
+            if (usuarioFormulario.getTelefono() != null && !usuarioFormulario.getTelefono().equals(usuarioLogueado.getTelefono())) {
+                usuarioLogueado.setTelefono(usuarioFormulario.getTelefono());
+            }
 
             // Si se ha proporcionado una nueva contraseña, actualizarla
             if (usuarioFormulario.getPassword() != null && !usuarioFormulario.getPassword().isEmpty()) {
-                usuarioLogueado.setPassword(usuarioFormulario.getPassword());
+            	String encodedPassword = passwordEncoder.encode(usuarioFormulario.getPassword());  // Cifra la nueva contraseña
+                usuarioLogueado.setPassword(encodedPassword);  // Asigna la contraseña cifrada
             }
 
             // Guardar el usuario actualizado en la base de datos
