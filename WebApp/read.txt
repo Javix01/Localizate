@@ -27,3 +27,6 @@ Una vez se realice lo anterior se propone crear un boton el cual sirva al usuari
 
 11/12/20:08
 Se ha solucionado que los usuarios solo puedan ver sus establecimientos (a no ser que sean admins, que podrán ver todos) y además se ha empezado el proceso de borrar establecimientos, aunque ahora mismo da problemas.
+
+11/12/23:40
+Se ha solucionado los problemas de la edición y eliminar un establecimeinto.
