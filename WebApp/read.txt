@@ -34,6 +34,7 @@ Se ha solucionado los problemas de la edición y eliminar un establecimeinto.
 12/12/2024 03:10
 El usuario puede crear las reservas que quiera para su negocio y se guardan en una base de datos.
 Aciones futuras:
-- Poder eliminar una reserva.
-- Un usuario normal pueda hacer reservas hacediendo a esta base de datos.
+- Poder eliminar una reserva y que no la pueda pillar ningun usuario.
+- Un usuario normal pueda hacer reservas comprobando la base de datos.
 - desde el apartado mis reservas, el usuario puede poner reseñas.
+* Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
