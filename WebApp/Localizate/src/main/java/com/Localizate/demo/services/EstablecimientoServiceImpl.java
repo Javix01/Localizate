@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.Localizate.demo.domain.Establecimiento;
 import com.Localizate.demo.repositories.EstablecimientoRepository;
+import com.Localizate.demo.repositories.ReservaRepository;
 
 @Service
 public class EstablecimientoServiceImpl implements EstablecimientoService {
 
     private final EstablecimientoRepository establecimientoRepository;
+    @Autowired
+    private ReservaRepository reservaRepository;
 
     @Autowired
     public EstablecimientoServiceImpl(EstablecimientoRepository establecimientoRepository) {
@@ -78,5 +81,10 @@ public class EstablecimientoServiceImpl implements EstablecimientoService {
 
         // Aquí puedes añadir lógica para manejar relaciones antes de eliminar, si es necesario.
         establecimientoRepository.delete(establecimiento);
+    }
+    
+    @Override
+    public long contarReservasPorEstablecimiento(Long establecimientoId) {
+        return reservaRepository.countByEstablecimientoId(establecimientoId);
     }
 }

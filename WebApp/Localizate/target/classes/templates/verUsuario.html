@@ -66,6 +66,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Nombre</th>
+                    <th>Coordenadas</th>
                     <th>Calle</th>
                     <th>Ciudad</th>
                     <th>Email</th>
@@ -75,6 +76,7 @@
                     <th>Tipo</th>
                     <th>Editar</th>
                     <th>Borrar</th>
+                    <th>Crear reserva</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,6 +86,7 @@
                         <!-- Enlace para ver los detalles del establecimiento -->
                         <a th:href="@{/detallesEstablecimiento/{id}(id=${establecimiento.id})}" th:text="${establecimiento.nombre}"></a>
                     </td>
+                    <td th:text="${establecimiento.localizacion}">Ciudad</td>
                     <td th:text="${establecimiento.calle}">Calle</td>
                     <td th:text="${establecimiento.ciudad}">Ciudad</td>
                     <td th:text="${establecimiento.email}">Email</td>
@@ -107,6 +110,12 @@
                             </button>
                         </form>
                     </td>
+                    <td>
+	                    <!-- Botón para crear reservas si admiteReservas es true -->
+		                <a th:if="${establecimiento.admiteReservas}"
+		                   th:href="@{/crearReserva/{id}(id=${establecimiento.id})}" 
+		                   class="btn btn-success">Crear Reserva</a>
+                	</td>
                 </tr>
             </tbody>
         </table>

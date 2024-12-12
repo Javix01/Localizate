@@ -6,20 +6,76 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+	<!-- Menú de navegación (igual que antes) -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/listEstablecimientos">
+                <img src="../static/images/logo.jpeg" alt="Logo" class="logo-image">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/listEstablecimientos">Establecimientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/reservas/misReservas}">Mis Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/verMisDatos}">Mis Datos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <div class="container mt-5">
         <h2>Crear Reserva</h2>
-        <form th:action="@{/reservas/guardar}" th:object="${reserva}" method="post">
-		    <div class="form-group">
-		        <label for="hora">Hora:</label>
-		        <input type="time" id="hora" name="hora" class="form-control" th:value="${reserva.hora}" required>
+        <form th:action="@{/guardarReserva}" method="post">
+		    <input type="hidden" th:value="${establecimiento.id}" name="establecimientoId"/>
+		    
+		    <div>
+		        <label>Fecha:</label>
+		        <input type="date" name="fecha" required/>
 		    </div>
-		    <div class="form-group">
-		        <label for="fecha">Fecha:</label>
-		        <input type="date" id="fecha" name="fecha" class="form-control" th:value="${reserva.fecha}" required>
+		    <div>
+		        <label>Hora:</label>
+		        <input type="time" name="hora" required/>
 		    </div>
-		    <button type="submit" class="btn btn-success">Reservar</button>
+		    <button type="submit" class="btn btn-primary">Guardar Reserva</button>
 		</form>
         <a th:href="@{/listEstablecimientos}" class="btn btn-primary mt-3">Volver a Establecimientos</a>
     </div>
+    
+    <div class="container mt-5">
+        <h2>Reservas creadas para <span th:text="${establecimiento.nombre}"></span></h2>
+
+	    <table class="table table-bordered">
+	        <thead class="thead-dark">
+	            <tr>
+	                <th>Fecha</th>
+	                <th>Hora</th>
+	                <th>Eliminar</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="reserva : ${reservas}">
+	                <td th:text="${reserva.fecha}">Fecha</td>
+	                <td th:text="${reserva.hora}">Hora</td>
+	                <td>
+	                    <form th:action="@{/eliminarReserva/{id}(id=${reserva.id})}" th:method="delete">
+	                        <button type="submit" class="btn btn-danger">
+	                            <span class="fas fa-trash"></span>
+	                        </button>
+	                    </form>
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</div>
 </body>
 </html>

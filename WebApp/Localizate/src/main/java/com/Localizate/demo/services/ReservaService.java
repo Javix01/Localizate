@@ -11,38 +11,20 @@ import com.Localizate.demo.repositories.ReservaRepository;
 
 public interface ReservaService {
 
-	/**
-     * Obtiene una lista de reservas asociadas a un establecimiento por su ID.
-     * 
-     * @param establecimientoId ID del establecimiento.
-     * @return Lista de reservas.
-     */
-    List<Reserva> getReservasPorEstablecimiento(Long establecimientoId);
+	// Método para crear una nueva reserva
+    Reserva crearReserva(Reserva reserva);
 
-    /**
-     * Guarda una nueva reserva o actualiza una existente.
-     * 
-     * @param reserva Objeto de la reserva a guardar.
-     * @return Reserva guardada.
-     */
-    void guardarReserva(Reserva reserva);
+    // Método para obtener todas las reservas de un establecimiento
+    List<Reserva> obtenerReservasPorEstablecimiento(Long establecimientoId);
 
-    /**
-     * Obtiene una reserva por su ID.
-     * 
-     * @param id ID de la reserva.
-     * @return Reserva encontrada, si existe.
-     */
-    Optional<Reserva> findReservaById(Long id);
-
-    /**
-     * Elimina una reserva por su ID.
-     * 
-     * @param id ID de la reserva a eliminar.
-     */
-    void eliminarReservaById(Long id);
+    // Método para obtener todas las reservas de un usuario
+    List<Reserva> obtenerReservasPorUsuario(Long usuarioId);
     
-    List<Reserva> getReservasPorUsuario(Long usuarioId);
+    // Método para eliminar una reserva por su ID
+    public void eliminarReserva(Long id);
+
+    // Método para encontrar una reserva por su ID
+    public Optional<Reserva> encontrarReservaPorId(Long id);
     
-    List<Reserva> findReservasByUsuario(String email);
+    public boolean tieneReservas(Long establecimientoId);
 }
