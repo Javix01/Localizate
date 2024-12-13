@@ -63,6 +63,17 @@ public class ReservasController {
         nuevaReserva.setEstablecimiento(establecimiento);
 
         model.addAttribute("reserva", nuevaReserva);
+        
+        
+        if (establecimientoOpt.isPresent()) {
+            List<Reserva> reservas = reservaService.findByEstablecimiento(establecimiento);
+            
+            model.addAttribute("establecimiento", establecimiento);
+            model.addAttribute("reservas", reservas);
+        } else {
+            model.addAttribute("error", "El establecimiento no existe.");
+        }
+        
         return "addReserva";
     }
 
@@ -263,5 +274,22 @@ public class ReservasController {
             establecimiento.setReseña(mediaCalificaciones);
             establecimientoService.actualizarEstablecimiento(establecimiento);
         }
+    }
+    
+    @GetMapping("/establecimiento/{id}")
+    public String verReservasDelEstablecimiento(@PathVariable Long id, Model model) {
+        Optional<Establecimiento> establecimientoOpt = establecimientoService.findEstablecimientoById(id);
+        
+        if (establecimientoOpt.isPresent()) {
+            Establecimiento establecimiento = establecimientoOpt.get();
+            List<Reserva> reservas = reservaService.findByEstablecimiento(establecimiento);
+            
+            model.addAttribute("establecimiento", establecimiento);
+            model.addAttribute("reservas", reservas);
+        } else {
+            model.addAttribute("error", "El establecimiento no existe.");
+        }
+        
+        return "formularioReserva"; // Nombre del archivo HTML
     }
 }

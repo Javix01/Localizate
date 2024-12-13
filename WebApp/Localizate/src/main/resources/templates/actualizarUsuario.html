@@ -6,6 +6,35 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+	<!-- Menú de navegación -->
+	<header>
+	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	        <a class="navbar-brand" href="/listEstablecimientos">
+                <img th:src="@{/images/logo.jpeg}" alt="Logo" class="logo-image" style="width: 50px; height: auto;">
+            </a>
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+	        <div class="collapse navbar-collapse" id="navbarNav">
+	            <ul class="navbar-nav ml-auto">
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/listEstablecimientos">Establecimientos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" th:href="@{/misReservas}">Mis Reservas</a>
+	                </li>
+	                <!-- Nuevo enlace para ver los datos del usuario -->
+	                <li class="nav-item">
+	                    <a class="nav-link" th:href="@{/verUsuario}">Mis Datos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/logout">Cerrar Sesión</a>
+	                </li>
+	            </ul>
+	        </div>
+	    </nav>
+	</header>
+
     <div class="container mt-5">
         <h2>Actualizar Información del Usuario</h2>
 

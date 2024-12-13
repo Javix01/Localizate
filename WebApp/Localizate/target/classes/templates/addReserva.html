@@ -10,32 +10,33 @@
 </head>
 <body>
     <!-- Menú de navegación -->
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="/listEstablecimientos">
+	<header>
+	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	        <a class="navbar-brand" href="/listEstablecimientos">
                 <img th:src="@{/images/logo.jpeg}" alt="Logo" class="logo-image" style="width: 50px; height: auto;">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/listEstablecimientos">Establecimientos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/reservas/misReservas}">Mis Reservas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/verMisDatos}">Mis Datos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Cerrar Sesión</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+	        <div class="collapse navbar-collapse" id="navbarNav">
+	            <ul class="navbar-nav ml-auto">
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/listEstablecimientos">Establecimientos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" th:href="@{/misReservas}">Mis Reservas</a>
+	                </li>
+	                <!-- Nuevo enlace para ver los datos del usuario -->
+	                <li class="nav-item">
+	                    <a class="nav-link" th:href="@{/verUsuario}">Mis Datos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/logout">Cerrar Sesión</a>
+	                </li>
+	            </ul>
+	        </div>
+	    </nav>
+	</header>
 
     <div class="container mt-5">
         <h1 class="text-center">Nueva Reserva</h1>
@@ -60,6 +61,36 @@
             <!-- Mostrar errores -->
             <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
         </div>
+	</div>
+        
+        <!-- Modulo que se usara para que el administrador del establecimeinto pueda ver las reservas que ha creado-->
+    <div class="container mt-5">
+        <h2>Reservas del Establecimiento</h2>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Reservable</th>
+                    <th>Usuario</th>
+                    <th>Calificación</th>
+                    <th>Reseña</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="reserva : ${reservas}">
+                    <td th:text="${reserva.fecha}">Fecha</td>
+                    <td th:text="${reserva.hora}">Hora</td>
+                    <td>
+                        <span th:text="${reserva.reservable ? 'Disponible' : 'No disponible'}"></span>
+                    </td>
+                    <td th:text="${reserva.usuario != null ? reserva.usuario.nombre : 'No asignado'}">Usuario</td>
+                    <td th:text="${reserva.calificacion}">Hora</td>
+                    <td th:text="${reserva.contenido}">Hora</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <!-- Scripts necesarios para Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

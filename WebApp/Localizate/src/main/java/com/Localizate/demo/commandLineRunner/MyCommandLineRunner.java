@@ -130,6 +130,22 @@ public class MyCommandLineRunner implements CommandLineRunner {
         usuario3.setRole("USER");
         // Guardar el usuario
         Usuario usuario3Saved = usuarioRepository.save(usuario3);
+        
+        Establecimiento establecimiento4 = new Establecimiento();
+        establecimiento4.setNombre("Hotel Luna");
+        establecimiento4.setLocalizacion("40.417775, -3.703800");
+        establecimiento4.setCalle("Calle Estrellas 3");
+        establecimiento4.setCiudad("Ciudad 3");
+        establecimiento4.setEmail("info@hotelluna.com");
+        establecimiento4.setTelefono(910000003);
+        establecimiento4.setWeb("www.hotelluna.com");
+        establecimiento4.setReseña(4.8f);
+        establecimiento4.setTipoEstablecimiento("Hotel");
+        establecimiento4.setAdmiteReservas(true);
+        establecimiento4.setUsuario(usuario3Saved);
+        
+        // Guardar establecimiento
+        establecimientoRepository.save(establecimiento4);
 
         System.out.println("Datos de prueba para usuarios, establecimientos y reservas creados exitosamente.");
     }
