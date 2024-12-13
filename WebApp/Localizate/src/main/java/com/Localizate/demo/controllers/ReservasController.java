@@ -155,4 +155,27 @@ public class ReservasController {
         return "misReservas"; // Vista que mostrará las reservas del usuario
     }
     
+ // Cancelar la reserva
+    @PostMapping("/cancelarReserva/{reservaId}")
+    public String cancelarReserva(@PathVariable Long reservaId, Model model) {
+    	Optional<Reserva> reservaOpt = reservaService.findById(reservaId);
+
+        if (reservaOpt.isEmpty()) {
+            model.addAttribute("error", "La reserva no existe.");
+            return "error";
+        }
+
+        Reserva reserva = reservaOpt.get();
+
+        // Asignar el usuario y cambiar la reserva a no reservable
+        reserva.setUsuario(null);  // Asignamos el usuario logueado a la reserva
+        reserva.setReserbable(true);  // Cambiar la propiedad "reserbable" a false
+
+        // Guardar la reserva actualizada
+        reservaService.actualizarReserva(reserva);
+
+        // Redirigir al usuario a una vista de confirmación o a su perfil
+        return "redirect:/misReservas" ;
+    }
+    
 }
