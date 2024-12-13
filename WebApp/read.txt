@@ -1,59 +1,60 @@
 Esta es la parte donde se encuentra la webapp
 
 9/12/2024 20:38
-Se ha creado una lista, en la que se puede buscar por tipo de establecimiento, por nombre y por ciudad, se pueden añadir establecimientos nuevos y editar, solo que al editar no se mantiene la información de las reseñas.
+Se ha creado una lista en la que se puede buscar por tipo de establecimiento, por nombre y por ciudad. Se pueden añadir establecimientos nuevos y editar, solo que al editar no se mantiene la información de las reseñas.
 
 9/12/2024 21:12
-Se ha añadido que cuando se pulse sobre un nombre se mostraran todos los datos de forma individual.
+Se ha añadido que, cuando se pulse sobre un nombre, se mostrarán todos los datos de forma individual.
 
 10/12/2024 17:30
-Se ha implememtado un login y registro de usuarios, que nos permite entrar a la lista de establecimientos y se pueden hacer reservas, aun que dicho sistema aun falla.
+Se ha implementado un login y registro de usuarios, que nos permite entrar a la lista de establecimientos y hacer reservas, aunque dicho sistema aún falla.
 
 10/12/2024 21:00
-Se ha mejorado el sistema de login y registro, haciendo que den mensajes dependiendo de las distintas situaciones que tiene. Se ha corregido problemas que había con respecto el direccionamiento de ciertas páginas a otras.
+Se ha mejorado el sistema de login y registro, haciendo que muestren mensajes dependiendo de las distintas situaciones que se presenten. Se han corregido problemas que había con respecto al direccionamiento de ciertas páginas a otras.
 
 11/12/2024 00:54
-Ahora desde la reserva se puede volver sin problema, si se pulsa el menu estableciemiento y el logo se vuelve a la lista de establecimientos.
+Ahora, desde la reserva, se puede volver sin problema. Si se pulsa el menú "Establecimientos" y el logo, se vuelve a la lista de establecimientos.
 
 11/12/2024 13:07
-Se ha añadido un apartado para que el usuario pueda consultar sus datos y modificarlos. actualmente el campo telefono no se edita, se trabajara en esto y en añadir que un usuario se pueda eliminar a si mismo (pero despues de hacer la parte de entregar permisos de editores a quien creo el local).
+Se ha añadido un apartado para que el usuario pueda consultar sus datos y modificarlos. Actualmente, el campo teléfono no se edita. Se trabajará en esto y en añadir que un usuario se pueda eliminar a sí mismo (pero después de hacer la parte de entregar permisos de editores a quien creó el local).
 
 11/12/2024 14:08
-Se han solucionado los errores a la hora de modificar algunos campos de la edición del usuario, como era el telefono y la contraseña, la cual no se cifraba y hacia imposible aceder a la web una vez se cerraba sesión. Proxima linea de actuación: Hacer que en ese apartado el usuario pueda ver los establecimientos que el incluyo en la web y los pueda editar o eliminar, mientras que en la pagina principal se veran todos los establecimientos pero ya sin boton de edición y eliminar.
+Se han solucionado los errores a la hora de modificar algunos campos de la edición del usuario, como el teléfono y la contraseña, la cual no se cifraba y hacía imposible acceder a la web una vez se cerraba sesión. Próxima línea de actuación: hacer que, en ese apartado, el usuario pueda ver los establecimientos que él incluyó en la web y los pueda editar o eliminar. Mientras tanto, en la página principal se verán todos los establecimientos, pero ya sin botón de edición y eliminación.
 
 11/12/2024 16:48
-Se han modificado la tabla de la pestaña donde aparecen todos los establecimientos, ahora ya no se puede ni modificar ni eleiminar, solo se pueden ver y al pulsar en el nombre te muestra toda la información de la misma. Ahora la gestión de establecimientos se hace desde la pestaña "mis datos" (verUsuario.html), donde solo queda que muestre a cada usuario los establecimientos que ha creado para que pueda gestionarlos, es decir, editarlos o eliminarlos. Desde la pestaña mis datos se puede añadir establecimientos tambien.
-Una vez se realice lo anterior se propone crear un boton el cual sirva al usuario para crear reservas en su establecimiento y desde el boton de reservar que hay dentro de cada pestaña de establecimeinto permitir que se aceda a la lista del mismo y el usuario final haga una reserva de un espacio predefinido la cual aparecera en la pestaña "Mis Reservas" desde en una ultima fase aparecera un boton desde el que se realizaran reseñas del establecimiento.
+Se ha modificado la tabla de la pestaña donde aparecen todos los establecimientos. Ahora ya no se puede ni modificar ni eliminar, solo se pueden ver y, al pulsar en el nombre, se muestra toda la información de la misma. Ahora, la gestión de establecimientos se hace desde la pestaña "Mis datos" (verUsuario.html), donde solo falta que muestre a cada usuario los establecimientos que ha creado para que pueda gestionarlos, es decir, editarlos o eliminarlos. Desde la pestaña "Mis datos" también se pueden añadir establecimientos.
+Una vez se realice lo anterior, se propone crear un botón que sirva al usuario para crear reservas en su establecimiento y, desde el botón de reservar que hay dentro de cada pestaña de establecimiento, permitir que se acceda a la lista del mismo y el usuario final haga una reserva de un espacio predefinido, la cual aparecerá en la pestaña "Mis Reservas". En una última fase, aparecerá un botón desde el que se realizarán reseñas del establecimiento.
 
-11/12/20:08
-Se ha solucionado que los usuarios solo puedan ver sus establecimientos (a no ser que sean admins, que podrán ver todos) y además se ha empezado el proceso de borrar establecimientos, aunque ahora mismo da problemas.
+11/12/2024 20:08
+Se ha solucionado que los usuarios solo puedan ver sus establecimientos (a no ser que sean admins, que podrán ver todos) y, además, se ha empezado el proceso de borrar establecimientos, aunque ahora mismo da problemas.
 
-11/12/23:40
-Se ha solucionado los problemas de la edición y eliminar un establecimeinto.
+11/12/2024 23:40
+Se ha solucionado los problemas de la edición y eliminación de un establecimiento.
 
 12/12/2024 03:10
 El usuario puede crear las reservas que quiera para su negocio y se guardan en una base de datos.
-Aciones futuras:
-- Poder eliminar una reserva y que no la pueda pillar ningun usuario.
-- Un usuario normal pueda hacer reservas comprobando la base de datos.
-- desde el apartado mis reservas, el usuario puede poner reseñas.
-* Diferenciar las reservas entre unas donde solo se necesita una hora y otras donde haya aforo.
+Acciones futuras:
 
+Poder eliminar una reserva y que no la pueda tomar ningún usuario.
+Un usuario normal pueda hacer reservas comprobando la base de datos.
+Desde el apartado "Mis Reservas", el usuario puede poner reseñas.
+Diferenciar las reservas entre unas donde solo se necesita una hora y otras donde haya aforo.
 13/12/2024 03:25
-El usuario puede crear las reservas que quiera para su negocio y se guardan en una base de datos(Solucionado problema), ya cualquier usuario puede hacer reserva y cancelarla desde el apartado de mis reservas.
-Aciones futuras:
-- Que no salgan a los usuarios reservas anteriores a la fecha y hora que tiene el dispsitivo en la actualidad.
-- desde el apartado mis reservas, el usuario puede poner reseñas.
-- Comprobar posibles errores y notificarlos al usuario, asi como comprobar que todos los enlaces estan correctos, sobre todo en el menu. 
+El usuario puede crear las reservas que quiera para su negocio y se guardan en una base de datos (solucionado el problema). Ahora, cualquier usuario puede hacer reservas y cancelarlas desde el apartado "Mis Reservas".
+Acciones futuras:
+
+Que no aparezcan a los usuarios reservas anteriores a la fecha y hora que tiene el dispositivo en la actualidad.
+Desde el apartado "Mis Reservas", el usuario puede poner reseñas.
+Comprobar posibles errores y notificarlos al usuario, así como comprobar que todos los enlaces están correctos, sobre todo en el menú.
 *(OP) Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
 
 13/12/2024 14:17
-Ahora un usuario que haya hecho una reserva puede poner una reseña y aparecera la media de la puntuación que tiene en todos los lugares donde se pueda ver el establecimeinto.
-Aciones futuras:
-- Que no salgan a los usuarios reservas anteriores a la fecha y hora que tiene el dispsitivo en la actualidad.
+Ahora un usuario que haya hecho una reserva puede poner una reseña y aparecerá la media de la puntuación que tiene en todos los lugares donde se pueda ver el establecimiento.
+Acciones futuras:
+- Que no salgan a los usuarios reservas anteriores a la fecha y hora que tiene el dispositivo en la actualidad.
 - Hacer un centro de gestión de reservas para el administrador del local.
 - Hacer que las reseñas escritas se vean en los detalles del establecimiento.
-- Comprobar posibles errores y notificarlos al usuario, asi como comprobar que todos los enlaces estan correctos, sobre todo en el menu. 
+- Comprobar posibles errores y notificarlos al usuario, así como comprobar que todos los enlaces están correctos, sobre todo en el menú. 
 *(OP) Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
 Nota:
-- Me he dado cuenta que si un usuario no hace reserva (porque el local no lo permite) no puede poner una reseña. -> Se podria crear una reserva toda a null menos los campos de la reseña.
+- Me he dado cuenta que si un usuario no hace reserva (porque el local no lo permite) no puede poner una reseña. -> Se podría crear una reserva toda a null menos los campos de la reseña.
