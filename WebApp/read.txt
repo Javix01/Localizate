@@ -37,4 +37,12 @@ Aciones futuras:
 - Poder eliminar una reserva y que no la pueda pillar ningun usuario.
 - Un usuario normal pueda hacer reservas comprobando la base de datos.
 - desde el apartado mis reservas, el usuario puede poner reseñas.
-* Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
+* Diferenciar las reservas entre unas donde solo se necesita una hora y otras donde haya aforo.
+
+13/12/2024 03:25
+El usuario puede crear las reservas que quiera para su negocio y se guardan en una base de datos(Solucionado problema), ya cualquier usuario puede hacer reserva y cancelarla desde el apartado de mis reservas.
+Aciones futuras:
+- Que no salgan a los usuarios reservas anteriores a la fecha y hora que tiene el dispsitivo en la actualidad.
+- desde el apartado mis reservas, el usuario puede poner reseñas.
+- Comprobar posibles errores y notificarlos al usuario, asi como comprobar que todos los enlaces estan correctos, sobre todo en el menu. 
+*(OP) Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
