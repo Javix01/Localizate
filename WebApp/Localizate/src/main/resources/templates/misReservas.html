@@ -21,6 +21,8 @@
                     <th>Establecimiento</th>
                     <th>Fecha</th>
                     <th>Hora</th>
+                    <th>Reseña</th> <!-- Columna para la reseña -->
+                    <th>Puntuación</th> <!-- Columna para la puntuación -->
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -30,11 +32,22 @@
                     <td th:text="${reserva.establecimiento.nombre}">Establecimiento</td>
                     <td th:text="${reserva.fecha}">Fecha</td>
                     <td th:text="${reserva.hora}">Hora</td>
+                    
+                    <!-- Mostrar la reseña, si existe -->
+                    <td th:text="${reserva.contenido != null && !reserva.contenido.isEmpty() ? reserva.contenido : 'No disponible'}">Reseña</td>
+                    
+                    <!-- Mostrar la puntuación, si existe -->
+                    <td th:text="${reserva.calificacion != 0 ? reserva.calificacion : 'No calificada'}">Puntuación</td>
+
                     <td>
                         <!-- Formulario para cancelar la reserva -->
                         <form th:action="@{/cancelarReserva/{reservaId}(reservaId=${reserva.id})}" method="post">
                             <button type="submit" class="btn btn-danger">Cancelar</button>
                         </form>
+                        <!-- Botón para dejar reseña -->
+                        <a th:href="@{/nueva/{reservaId}(reservaId=${reserva.id})}" class="btn btn-primary">
+                            Dejar Reseña
+                        </a>
                     </td>
                 </tr>
             </tbody>

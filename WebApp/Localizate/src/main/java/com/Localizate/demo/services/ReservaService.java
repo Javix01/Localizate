@@ -28,4 +28,8 @@ public interface ReservaService {
     
  // Método para obtener las reservas de un usuario
     List<Reserva> obtenerReservasPorUsuario(Long usuarioId);
+    
+    void crearResenia(Reserva reserva);
+    
+    public List<Reserva> findByEstablecimiento(Establecimiento establecimiento);
 }

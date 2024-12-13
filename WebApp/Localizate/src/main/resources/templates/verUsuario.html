@@ -94,7 +94,7 @@
                     <td>
                         <a th:href="${establecimiento.web}" target="_blank" th:text="${establecimiento.web}">Web</a>
                     </td>
-                    <td th:text="${establecimiento.reseña}">Reseña</td>
+                    <td th:text="${#numbers.formatDecimal(establecimiento.reseña, 1, 2)}">Reseña</td>
                     <td th:text="${establecimiento.tipoEstablecimiento}">Tipo</td>
                     <td>
                         <!-- Botón Editar (para establecimiento) -->

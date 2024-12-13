@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +31,18 @@ public class ReservasController {
     private final ReservaService reservaService;
     private final EstablecimientoService establecimientoService;
     private final UsuarioService usuarioService;
+    private static final Logger logger = LoggerFactory.getLogger(ReservasController.class);
 
     @Autowired
     public ReservasController(ReservaService reservaService, EstablecimientoService establecimientoService, UsuarioService usuarioService) {
         this.reservaService = reservaService;
         this.establecimientoService = establecimientoService;
         this.usuarioService = usuarioService;
+    }
+
+    // Centralizar la obtención del usuario logueado
+    private Usuario obtenerUsuarioLogueado() {
+        return usuarioService.obtenerUsuarioLogueado();
     }
 
     /**
@@ -46,12 +53,14 @@ public class ReservasController {
         Optional<Establecimiento> establecimientoOpt = establecimientoService.findEstablecimientoById(establecimientoId);
 
         if (establecimientoOpt.isEmpty()) {
-            throw new IllegalArgumentException("El establecimiento no existe.");
+            logger.error("El establecimiento con ID {} no existe.", establecimientoId);
+            model.addAttribute("error", "El establecimiento no existe.");
+            return "error";
         }
 
         Establecimiento establecimiento = establecimientoOpt.get();
         Reserva nuevaReserva = new Reserva();
-        nuevaReserva.setEstablecimiento(establecimiento); // Asignar el establecimiento
+        nuevaReserva.setEstablecimiento(establecimiento);
 
         model.addAttribute("reserva", nuevaReserva);
         return "addReserva";
@@ -63,31 +72,37 @@ public class ReservasController {
     @PostMapping("/guardarReserva")
     public String guardarReserva(@ModelAttribute Reserva reserva, Model model) {
         try {
-            System.out.println("Datos recibidos: " + reserva);
+            logger.info("Datos recibidos para la reserva: {}", reserva);
 
             Optional<Establecimiento> establecimientoOpt = establecimientoService.findEstablecimientoById(reserva.getEstablecimiento().getId());
             if (establecimientoOpt.isEmpty()) {
                 throw new IllegalArgumentException("El establecimiento no existe.");
             }
 
+            // Validar fecha y hora
             if (reserva.getFecha() == null || reserva.getHora() == null) {
                 throw new IllegalArgumentException("La fecha y la hora son obligatorias.");
             }
 
+            if (reserva.getFecha().isBefore(LocalDate.now())) {
+                throw new IllegalArgumentException("La fecha de la reserva no puede ser en el pasado.");
+            }
+
             reserva.setUsuario(null); // Por defecto, sin usuario
-            reserva.setReserbable(true);
+            reserva.setReservable(true);
 
             reservaService.crearReserva(reserva);
             return "redirect:/verUsuario";
         } catch (Exception e) {
+            logger.error("Error al guardar la reserva: ", e);
             model.addAttribute("error", e.getMessage());
             model.addAttribute("reserva", reserva);
             return "addReserva";
         }
     }
-    
+
     /**
-     * Mostrar todas las reservas posibles para un establecimiento
+     * Mostrar todas las reservas posibles para un establecimiento.
      */
     @GetMapping("/reservas/nuevo/{idEstablecimiento}")
     public String mostrarReservasPosibles(@PathVariable Long idEstablecimiento, Model model) {
@@ -104,16 +119,15 @@ public class ReservasController {
         model.addAttribute("establecimiento", establecimiento);
         model.addAttribute("reservas", reservasPosibles);
 
-        return "reservasPosibles"; // Vista que mostraría las reservas posibles
+        return "reservasPosibles";
     }
-    
+
     /**
      * Modificar la reserva cuando el usuario hace clic en "Reservar".
      */
     @PostMapping("/reservar/{reservaId}")
     public String reservar(@PathVariable Long reservaId, Model model) {
-        // Obtener el usuario logueado
-        Usuario usuario = usuarioService.obtenerUsuarioLogueado(); // Obtener el usuario logueado
+        Usuario usuario = obtenerUsuarioLogueado();
 
         Optional<Reserva> reservaOpt = reservaService.findById(reservaId);
 
@@ -123,42 +137,38 @@ public class ReservasController {
         }
 
         Reserva reserva = reservaOpt.get();
+        reserva.setUsuario(usuario);
+        reserva.setReservable(false); // La reserva ya no es disponible
 
-        // Asignar el usuario y cambiar la reserva a no reservable
-        reserva.setUsuario(usuario);  // Asignamos el usuario logueado a la reserva
-        reserva.setReserbable(false);  // Cambiar la propiedad "reserbable" a false
-
-        // Guardar la reserva actualizada
         reservaService.actualizarReserva(reserva);
 
-        // Redirigir al usuario a una vista de confirmación o a su perfil
         return "redirect:/reservas/nuevo/" + reserva.getEstablecimiento().getId();
     }
-    
+
     /**
      * Mostrar las reservas de un usuario.
      */
     @GetMapping("/misReservas")
     public String mostrarMisReservas(Model model) {
-        // Obtener el usuario logueado
-        Usuario usuario = usuarioService.obtenerUsuarioLogueado();
+        Usuario usuario = obtenerUsuarioLogueado();
 
         if (usuario == null) {
             model.addAttribute("error", "No has iniciado sesión.");
             return "error";
         }
 
-        // Obtener las reservas del usuario
         List<Reserva> reservas = reservaService.obtenerReservasPorUsuario(usuario.getId());
 
         model.addAttribute("reservas", reservas);
-        return "misReservas"; // Vista que mostrará las reservas del usuario
+        return "misReservas";
     }
-    
- // Cancelar la reserva
+
+    /**
+     * Cancelar la reserva.
+     */
     @PostMapping("/cancelarReserva/{reservaId}")
     public String cancelarReserva(@PathVariable Long reservaId, Model model) {
-    	Optional<Reserva> reservaOpt = reservaService.findById(reservaId);
+        Optional<Reserva> reservaOpt = reservaService.findById(reservaId);
 
         if (reservaOpt.isEmpty()) {
             model.addAttribute("error", "La reserva no existe.");
@@ -166,16 +176,92 @@ public class ReservasController {
         }
 
         Reserva reserva = reservaOpt.get();
+        reserva.setUsuario(null);  // Desasignar al usuario
+        reserva.setReservable(true); // Volver a hacer la reserva disponible
 
-        // Asignar el usuario y cambiar la reserva a no reservable
-        reserva.setUsuario(null);  // Asignamos el usuario logueado a la reserva
-        reserva.setReserbable(true);  // Cambiar la propiedad "reserbable" a false
-
-        // Guardar la reserva actualizada
         reservaService.actualizarReserva(reserva);
+        
+        // Obtener el establecimiento asociado a la reserva
+        Establecimiento establecimiento = reserva.getEstablecimiento();
+        
+        // Actualizar la media de calificación del establecimiento
+        actualizarMediaCalificacionesEstablecimiento(establecimiento);
 
-        // Redirigir al usuario a una vista de confirmación o a su perfil
-        return "redirect:/misReservas" ;
+        return "redirect:/misReservas";
+    }
+
+    /**
+     * Mostrar formulario para crear una reseña.
+     */
+    @GetMapping("/nueva/{reservaId}")
+    public String mostrarFormularioResenia(@PathVariable Long reservaId, Model model) {
+        Optional<Reserva> reservaOpt = reservaService.findById(reservaId);
+        if (reservaOpt.isEmpty()) {
+            model.addAttribute("error", "La reserva no existe.");
+            return "error";
+        }
+
+        model.addAttribute("reserva", reservaOpt.get());
+        return "reseniasNueva";
+    }
+
+    /**
+     * Guardar reseña de una reserva.
+     */
+    @PostMapping("/guardar/{reservaId}")
+    public String guardarResenia(@PathVariable Long reservaId,
+                                 @RequestParam String contenido,
+                                 @RequestParam int calificacion,
+                                 Model model) {
+
+        Usuario usuario = obtenerUsuarioLogueado();
+
+        Optional<Reserva> reservaOpt = reservaService.findById(reservaId);
+
+        if (reservaOpt.isEmpty()) {
+            model.addAttribute("error", "La reserva no existe.");
+            return "error";
+        }
+
+        Reserva reserva = reservaOpt.get();
+        reserva.setContenido(contenido);
+        reserva.setCalificacion(calificacion);
+        reserva.setFechaCreacion(LocalDateTime.now());
+        reserva.setUsuario(usuario);
+        reserva.setReservable(false);
+
+        reservaService.actualizarReserva(reserva);
+        
+     // Obtener el establecimiento asociado a la reserva
+        Establecimiento establecimiento = reserva.getEstablecimiento();
+        
+        // Actualizar la media de calificación del establecimiento
+        actualizarMediaCalificacionesEstablecimiento(establecimiento);
+
+        return "redirect:/misReservas";
     }
     
+ // Método para actualizar la media de las calificaciones de un establecimiento
+    private void actualizarMediaCalificacionesEstablecimiento(Establecimiento establecimiento) {
+        // Obtener todas las reservas del establecimiento
+        List<Reserva> reservas = reservaService.findByEstablecimiento(establecimiento);
+        
+        // Calcular la media de las calificaciones
+        double sumaCalificaciones = 0;
+        int totalCalificaciones = 0;
+
+        for (Reserva reserva : reservas) {
+            if (reserva.getCalificacion() > 0) {  // Solo contar calificaciones mayores a 0
+                sumaCalificaciones += reserva.getCalificacion();
+                totalCalificaciones++;
+            }
+        }
+
+        // Si hay calificaciones, calcular la media
+        if (totalCalificaciones > 0) {
+            double mediaCalificaciones = sumaCalificaciones / totalCalificaciones;
+            establecimiento.setReseña(mediaCalificaciones);
+            establecimientoService.actualizarEstablecimiento(establecimiento);
+        }
+    }
 }

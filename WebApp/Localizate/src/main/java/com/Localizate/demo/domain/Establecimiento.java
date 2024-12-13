@@ -22,7 +22,7 @@ public class Establecimiento {
     private String email;
     private int telefono;
     private String web;
-    private float reseña;
+    private double reseña;
     private boolean admiteReservas;
     
     @Column(name = "tipo_establecimiento")
@@ -99,11 +99,11 @@ public class Establecimiento {
 		this.web = web;
 	}
 
-	public float getReseña() {
+	public double getReseña() {
 		return reseña;
 	}
 
-	public void setReseña(float reseña) {
+	public void setReseña(double reseña) {
 		this.reseña = reseña;
 	}
 
@@ -129,37 +129,5 @@ public class Establecimiento {
 
 	public void setAdmiteReservas(boolean admiteReservas) {
 	    this.admiteReservas = admiteReservas;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(admiteReservas, calle, ciudad, email, id, localizacion, nombre, reseña, telefono,
-				tipoEstablecimiento, usuario, web);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Establecimiento other = (Establecimiento) obj;
-		return admiteReservas == other.admiteReservas && Objects.equals(calle, other.calle)
-				&& Objects.equals(ciudad, other.ciudad) && Objects.equals(email, other.email)
-				&& Objects.equals(id, other.id) && Objects.equals(localizacion, other.localizacion)
-				&& Objects.equals(nombre, other.nombre)
-				&& Float.floatToIntBits(reseña) == Float.floatToIntBits(other.reseña) && telefono == other.telefono
-				&& Objects.equals(tipoEstablecimiento, other.tipoEstablecimiento)
-				&& Objects.equals(usuario, other.usuario) && Objects.equals(web, other.web);
-	}
-
-	@Override
-	public String toString() {
-		return "Establecimiento [id=" + id + ", nombre=" + nombre + ", localizacion=" + localizacion + ", calle="
-				+ calle + ", ciudad=" + ciudad + ", email=" + email + ", telefono=" + telefono + ", web=" + web
-				+ ", reseña=" + reseña + ", admiteReservas=" + admiteReservas + ", tipoEstablecimiento="
-				+ tipoEstablecimiento + ", usuario=" + usuario + "]";
 	}  
 }

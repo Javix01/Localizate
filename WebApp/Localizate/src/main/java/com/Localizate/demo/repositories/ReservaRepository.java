@@ -13,4 +13,7 @@ public interface ReservaRepository extends CrudRepository<Reserva, Long> {
 	
 	// Método para encontrar reservas de un usuario específico
     List<Reserva> findByUsuarioId(Long usuarioId);
+    
+ // Método para encontrar todas las reservas de un establecimiento
+    List<Reserva> findByEstablecimiento(Establecimiento establecimiento);
 }

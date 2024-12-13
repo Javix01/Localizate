@@ -70,4 +70,13 @@ public class ReservaServiceImpl implements ReservaService {
         return reservaRepository.findByUsuarioId(usuarioId);
     }
 
+	@Override
+	public void crearResenia(Reserva reserva) {
+		reservaRepository.save(reserva);
+	}
+
+	public List<Reserva> findByEstablecimiento(Establecimiento establecimiento) {
+	    return reservaRepository.findByEstablecimiento(establecimiento);
+	}
+
 }

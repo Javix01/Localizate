@@ -24,10 +24,10 @@
                     <td th:text="${reserva.hora}"></td>
                     <td>
                         <!-- Solo mostrar el botón si la reserva es disponible -->
-                        <form th:if="${reserva.reserbable}" th:action="@{/reservar/{reservaId}(reservaId=${reserva.id})}" method="post">
+                        <form th:if="${reserva.reservable}" th:action="@{/reservar/{reservaId}(reservaId=${reserva.id})}" method="post">
                             <button type="submit" class="btn btn-success">Reservar</button>
                         </form>
-                        <span th:if="${not reserva.reserbable}" class="text-muted">No disponible</span>
+                        <span th:if="${not reserva.reservable}" class="text-muted">No disponible</span>
                     </td>
                 </tr>
             </tbody>

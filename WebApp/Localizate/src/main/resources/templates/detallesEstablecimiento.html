@@ -26,7 +26,7 @@
                     <strong>Teléfono:</strong> <span th:text="${establecimiento.telefono}"></span><br>
                     <strong>Web:</strong> 
                     <a th:href="${establecimiento.web}" target="_blank" th:text="${establecimiento.web}"></a><br>
-                    <strong>Reseña:</strong> <span th:text="${establecimiento.reseña}"></span><br>
+                    <strong>Reseña:</strong> <span th:text="${#numbers.formatDecimal(establecimiento.reseña, 1, 2)}"></span><br>
                     <strong>Tipo de Establecimiento:</strong> <span th:text="${establecimiento.tipoEstablecimiento}"></span>
                 </p>
                 <a th:if="${establecimiento.admiteReservas}" 
