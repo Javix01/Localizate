@@ -34,19 +34,18 @@ Se ha solucionado los problemas de la edición y eliminación de un establecimie
 12/12/2024 03:10
 El usuario puede crear las reservas que quiera para su negocio y se guardan en una base de datos.
 Acciones futuras:
+- Poder eliminar una reserva y que no la pueda tomar ningún usuario.
+- Un usuario normal pueda hacer reservas comprobando la base de datos.
+- Desde el apartado "Mis Reservas", el usuario puede poner reseñas.
+- Diferenciar las reservas entre unas donde solo se necesita una hora y otras donde haya aforo.
 
-Poder eliminar una reserva y que no la pueda tomar ningún usuario.
-Un usuario normal pueda hacer reservas comprobando la base de datos.
-Desde el apartado "Mis Reservas", el usuario puede poner reseñas.
-Diferenciar las reservas entre unas donde solo se necesita una hora y otras donde haya aforo.
 13/12/2024 03:25
 El usuario puede crear las reservas que quiera para su negocio y se guardan en una base de datos (solucionado el problema). Ahora, cualquier usuario puede hacer reservas y cancelarlas desde el apartado "Mis Reservas".
 Acciones futuras:
-
-Que no aparezcan a los usuarios reservas anteriores a la fecha y hora que tiene el dispositivo en la actualidad.
-Desde el apartado "Mis Reservas", el usuario puede poner reseñas.
-Comprobar posibles errores y notificarlos al usuario, así como comprobar que todos los enlaces están correctos, sobre todo en el menú.
-*(OP) Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
+- Que no aparezcan a los usuarios reservas anteriores a la fecha y hora que tiene el dispositivo en la actualidad.
+- Desde el apartado "Mis Reservas", el usuario puede poner reseñas.
+- Comprobar posibles errores y notificarlos al usuario, así como comprobar que todos los enlaces están correctos, sobre todo en el menú.
+* (OP) Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
 
 13/12/2024 14:17
 Ahora un usuario que haya hecho una reserva puede poner una reseña y aparecerá la media de la puntuación que tiene en todos los lugares donde se pueda ver el establecimiento.
