@@ -135,4 +135,24 @@ public class ReservasController {
         return "redirect:/reservas/nuevo/" + reserva.getEstablecimiento().getId();
     }
     
+    /**
+     * Mostrar las reservas de un usuario.
+     */
+    @GetMapping("/misReservas")
+    public String mostrarMisReservas(Model model) {
+        // Obtener el usuario logueado
+        Usuario usuario = usuarioService.obtenerUsuarioLogueado();
+
+        if (usuario == null) {
+            model.addAttribute("error", "No has iniciado sesión.");
+            return "error";
+        }
+
+        // Obtener las reservas del usuario
+        List<Reserva> reservas = reservaService.obtenerReservasPorUsuario(usuario.getId());
+
+        model.addAttribute("reservas", reservas);
+        return "misReservas"; // Vista que mostrará las reservas del usuario
+    }
+    
 }

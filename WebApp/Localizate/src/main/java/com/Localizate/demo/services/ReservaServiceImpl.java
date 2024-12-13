@@ -63,4 +63,11 @@ public class ReservaServiceImpl implements ReservaService {
     public Optional<Reserva> findById(Long reservaId) {
         return reservaRepository.findById(reservaId); // Buscar la reserva por ID
     }
+    
+    @Override
+    public List<Reserva> obtenerReservasPorUsuario(Long usuarioId) {
+        // Obtenemos las reservas de un usuario en particular
+        return reservaRepository.findByUsuarioId(usuarioId);
+    }
+
 }

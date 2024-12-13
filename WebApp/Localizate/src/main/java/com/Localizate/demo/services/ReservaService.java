@@ -25,4 +25,7 @@ public interface ReservaService {
     void actualizarReserva(Reserva reserva);
     
     Optional<Reserva> findById(Long reservaId); // Método para buscar una reserva por ID
+    
+ // Método para obtener las reservas de un usuario
+    List<Reserva> obtenerReservasPorUsuario(Long usuarioId);
 }
