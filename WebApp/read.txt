@@ -46,3 +46,14 @@ Aciones futuras:
 - desde el apartado mis reservas, el usuario puede poner reseñas.
 - Comprobar posibles errores y notificarlos al usuario, asi como comprobar que todos los enlaces estan correctos, sobre todo en el menu. 
 *(OP) Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
+
+13/12/2024 14:17
+Ahora un usuario que haya hecho una reserva puede poner una reseña y aparecera la media de la puntuación que tiene en todos los lugares donde se pueda ver el establecimeinto.
+Aciones futuras:
+- Que no salgan a los usuarios reservas anteriores a la fecha y hora que tiene el dispsitivo en la actualidad.
+- Hacer un centro de gestión de reservas para el administrador del local.
+- Hacer que las reseñas escritas se vean en los detalles del establecimiento.
+- Comprobar posibles errores y notificarlos al usuario, asi como comprobar que todos los enlaces estan correctos, sobre todo en el menu. 
+*(OP) Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
+Nota:
+- Me he dado cuenta que si un usuario no hace reserva (porque el local no lo permite) no puede poner una reseña. -> Se podria crear una reserva toda a null menos los campos de la reseña.
