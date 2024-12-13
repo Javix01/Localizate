@@ -1,3 +1,4 @@
+
 package com.Localizate.demo.services;
 
 import java.util.List;
@@ -11,20 +12,17 @@ import com.Localizate.demo.repositories.ReservaRepository;
 
 public interface ReservaService {
 
-	// Método para crear una nueva reserva
-    Reserva crearReserva(Reserva reserva);
+	public void crearReserva(Reserva reserva);
 
-    // Método para obtener todas las reservas de un establecimiento
-    List<Reserva> obtenerReservasPorEstablecimiento(Long establecimientoId);
-
-    // Método para obtener todas las reservas de un usuario
-    List<Reserva> obtenerReservasPorUsuario(Long usuarioId);
+    public List<Reserva> obtenerReservasPorEstablecimiento(Long establecimientoId);
     
-    // Método para eliminar una reserva por su ID
-    public void eliminarReserva(Long id);
-
-    // Método para encontrar una reserva por su ID
-    public Optional<Reserva> encontrarReservaPorId(Long id);
+    public List<Reserva> obtenerReservasPosibles(Long idEstablecimiento);
     
-    public boolean tieneReservas(Long establecimientoId);
+ // Método para obtener las reservas por ID de establecimiento
+    List<Reserva> findReservasByEstablecimientoId(Long establecimientoId);
+    
+ // Método para actualizar una reserva
+    void actualizarReserva(Reserva reserva);
+    
+    Optional<Reserva> findById(Long reservaId); // Método para buscar una reserva por ID
 }

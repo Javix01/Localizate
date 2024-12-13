@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="/listEstablecimientos">
-                <img src="../static/images/logo.jpeg" alt="Logo" class="logo-image">
+                <img th:href="@{/images/logo.jpeg}" alt="Logo" class="logo-image">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -111,11 +111,13 @@
                         </form>
                     </td>
                     <td>
-	                    <!-- Botón para crear reservas si admiteReservas es true -->
-		                <a th:if="${establecimiento.admiteReservas}"
-		                   th:href="@{/crearReserva/{id}(id=${establecimiento.id})}" 
-		                   class="btn btn-success">Crear Reserva</a>
-                	</td>
+					    <!-- Botón para crear reservas si admiteReservas es true -->
+					    <a th:if="${establecimiento.admiteReservas}"
+					       th:href="@{/addReserva/{establecimientoId}(establecimientoId=${establecimiento.id})}" 
+					       class="btn btn-success">
+					        Crear Reserva
+					    </a>
+					</td>
                 </tr>
             </tbody>
         </table>

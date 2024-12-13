@@ -3,10 +3,19 @@ package com.Localizate.demo.controllers;
 import com.Localizate.demo.domain.Establecimiento;
 import com.Localizate.demo.domain.Reserva;
 import com.Localizate.demo.domain.Usuario;
+import com.Localizate.demo.services.EstablecimientoService;
 import com.Localizate.demo.services.EstablecimientoServiceImpl;
+import com.Localizate.demo.services.ReservaService;
 import com.Localizate.demo.services.ReservaServiceImpl;
+import com.Localizate.demo.services.UsuarioService;
 import com.Localizate.demo.services.UsuarioServiceImpl;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,78 +27,112 @@ import java.util.Optional;
 @Controller
 public class ReservasController {
 
-    private final ReservaServiceImpl reservaService;
-    private final EstablecimientoServiceImpl establecimientoService;
-    private final UsuarioServiceImpl usuarioService;
+    private final ReservaService reservaService;
+    private final EstablecimientoService establecimientoService;
+    private final UsuarioService usuarioService;
 
     @Autowired
-    public ReservasController(ReservaServiceImpl reservaService, EstablecimientoServiceImpl establecimientoService, UsuarioServiceImpl usuarioService) {
+    public ReservasController(ReservaService reservaService, EstablecimientoService establecimientoService, UsuarioService usuarioService) {
         this.reservaService = reservaService;
         this.establecimientoService = establecimientoService;
         this.usuarioService = usuarioService;
     }
 
-    // Mostrar formulario para crear una nueva reserva
-    @GetMapping("/crearReserva/{establecimientoId}")
-    public String mostrarFormularioReserva(@PathVariable Long establecimientoId, Model model) {
+    /**
+     * Mostrar formulario para crear una nueva reserva.
+     */
+    @GetMapping("/addReserva/{establecimientoId}")
+    public String mostrarFormularioAddReserva(@PathVariable Long establecimientoId, Model model) {
         Optional<Establecimiento> establecimientoOpt = establecimientoService.findEstablecimientoById(establecimientoId);
 
-        if (establecimientoOpt.isPresent()) {
-            Establecimiento establecimiento = establecimientoOpt.get();
-
-            // Obtener todas las reservas del establecimiento
-            List<Reserva> reservas = reservaService.obtenerReservasPorEstablecimiento(establecimientoId);
-
-            model.addAttribute("establecimiento", establecimiento);
-            model.addAttribute("fecha", LocalDate.now());
-            model.addAttribute("reservas", reservas); // Agregar las reservas al modelo
-            return "formularioReserva";
-        } else {
-            model.addAttribute("error", "Establecimiento no encontrado.");
-            return "redirect:/listEstablecimientos";
+        if (establecimientoOpt.isEmpty()) {
+            throw new IllegalArgumentException("El establecimiento no existe.");
         }
+
+        Establecimiento establecimiento = establecimientoOpt.get();
+        Reserva nuevaReserva = new Reserva();
+        nuevaReserva.setEstablecimiento(establecimiento); // Asignar el establecimiento
+
+        model.addAttribute("reserva", nuevaReserva);
+        return "addReserva";
     }
 
-    // Guardar la reserva
+    /**
+     * Guardar una nueva reserva.
+     */
     @PostMapping("/guardarReserva")
-    public String guardarReserva(@RequestParam Long establecimientoId,
-                                 @RequestParam String fecha,
-                                 @RequestParam String hora, Model model) {
-        // Obtener usuario logueado
-        Usuario usuarioLogueado = usuarioService.obtenerUsuarioLogueado();
+    public String guardarReserva(@ModelAttribute Reserva reserva, Model model) {
+        try {
+            System.out.println("Datos recibidos: " + reserva);
 
-        if (usuarioLogueado == null) {
-            model.addAttribute("error", "Usuario no autenticado.");
-            return "redirect:/login";  // Redirigir al login si no está autenticado
-        }
+            Optional<Establecimiento> establecimientoOpt = establecimientoService.findEstablecimientoById(reserva.getEstablecimiento().getId());
+            if (establecimientoOpt.isEmpty()) {
+                throw new IllegalArgumentException("El establecimiento no existe.");
+            }
 
-        // Verificar si el establecimiento existe
-        Optional<Establecimiento> establecimientoOpt = establecimientoService.findEstablecimientoById(establecimientoId);
-        
-        if (establecimientoOpt.isPresent()) {
-            Establecimiento establecimiento = establecimientoOpt.get();
+            if (reserva.getFecha() == null || reserva.getHora() == null) {
+                throw new IllegalArgumentException("La fecha y la hora son obligatorias.");
+            }
 
-            // Crear nueva reserva
-            Reserva reserva = new Reserva();
-            reserva.setEstablecimiento(establecimiento);
-            reserva.setCliente(usuarioLogueado.getNombre());
-            reserva.setFecha(LocalDate.parse(fecha));  // Convertir fecha de string a LocalDate
-            reserva.setHora(hora);
-            reserva.setUsuario(usuarioLogueado);
+            reserva.setUsuario(null); // Por defecto, sin usuario
+            reserva.setReserbable(true);
 
-            // Guardar la reserva
             reservaService.crearReserva(reserva);
-            
-            return "redirect:/listEstablecimientos";  // Redirigir al listado de establecimientos
-        } else {
-            model.addAttribute("error", "Establecimiento no encontrado.");
-            return "redirect:/listEstablecimientos";  // Redirigir si el establecimiento no existe
+            return "redirect:/verUsuario";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("reserva", reserva);
+            return "addReserva";
         }
     }
     
-    @DeleteMapping("/eliminarReserva/{id}")
-    public String eliminarReserva(@PathVariable Long id) {
-        reservaService.eliminarReserva(id);
-        return "redirect:/misReservas"; // Redirige a la lista de reservas del usuario
+    /**
+     * Mostrar todas las reservas posibles para un establecimiento
+     */
+    @GetMapping("/reservas/nuevo/{idEstablecimiento}")
+    public String mostrarReservasPosibles(@PathVariable Long idEstablecimiento, Model model) {
+        Optional<Establecimiento> establecimientoOpt = establecimientoService.findEstablecimientoById(idEstablecimiento);
+
+        if (establecimientoOpt.isEmpty()) {
+            model.addAttribute("error", "El establecimiento no existe.");
+            return "error";
+        }
+
+        Establecimiento establecimiento = establecimientoOpt.get();
+        List<Reserva> reservasPosibles = reservaService.findReservasByEstablecimientoId(idEstablecimiento);
+
+        model.addAttribute("establecimiento", establecimiento);
+        model.addAttribute("reservas", reservasPosibles);
+
+        return "reservasPosibles"; // Vista que mostraría las reservas posibles
     }
+    
+    /**
+     * Modificar la reserva cuando el usuario hace clic en "Reservar".
+     */
+    @PostMapping("/reservar/{reservaId}")
+    public String reservar(@PathVariable Long reservaId, Model model) {
+        // Obtener el usuario logueado
+        Usuario usuario = usuarioService.obtenerUsuarioLogueado(); // Obtener el usuario logueado
+
+        Optional<Reserva> reservaOpt = reservaService.findById(reservaId);
+
+        if (reservaOpt.isEmpty()) {
+            model.addAttribute("error", "La reserva no existe.");
+            return "error";
+        }
+
+        Reserva reserva = reservaOpt.get();
+
+        // Asignar el usuario y cambiar la reserva a no reservable
+        reserva.setUsuario(usuario);  // Asignamos el usuario logueado a la reserva
+        reserva.setReserbable(false);  // Cambiar la propiedad "reserbable" a false
+
+        // Guardar la reserva actualizada
+        reservaService.actualizarReserva(reserva);
+
+        // Redirigir al usuario a una vista de confirmación o a su perfil
+        return "redirect:/reservas/nuevo/" + reserva.getEstablecimiento().getId();
+    }
+    
 }

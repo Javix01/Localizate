@@ -103,7 +103,7 @@ public class EstablecimientoController {
         try {
             // Llamar al servicio para eliminar el establecimiento
             establecimientoService.eliminarEstablecimiento(id);
-            return "redirect:/verUsuario";  // Redirigir a la vista de usuario después de la eliminación
+            return "redirect:/verUsuario";  
         } catch (Exception e) {
             model.addAttribute("error", "No se pudo eliminar el establecimiento.");
             return "verUsuario";  // Regresar con error si algo salió mal

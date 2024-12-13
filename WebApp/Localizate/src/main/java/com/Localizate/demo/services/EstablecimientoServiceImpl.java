@@ -82,9 +82,9 @@ public class EstablecimientoServiceImpl implements EstablecimientoService {
         // Aquí puedes añadir lógica para manejar relaciones antes de eliminar, si es necesario.
         establecimientoRepository.delete(establecimiento);
     }
-    
+    /*
     @Override
     public long contarReservasPorEstablecimiento(Long establecimientoId) {
         return reservaRepository.countByEstablecimientoId(establecimientoId);
-    }
+    }*/
 }

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
+import org.springframework.data.annotation.Version;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,67 +18,63 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 public class Reserva {
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@ManyToOne(optional = false) // Si es obligatorio
-    @JoinColumn(name = "establecimiento_id", nullable = false) // Columna en la base de datos
+    private LocalDate fecha;
+    private String hora;
+
+    @ManyToOne
     private Establecimiento establecimiento;
 
-    @Column(nullable = false)
-    private String cliente;
-
-    @Column(nullable = false)
-    private LocalDate fecha;
-
-    @Column(nullable = false)
-    private String hora;
-    
     @ManyToOne
-    private Usuario usuario;
+    private Usuario usuario = null;
 
+    private boolean reserbable = true; // Estado por defecto
+
+    @Version
+    private Long version;
+    
+    public Reserva() {
+		// TODO Auto-generated constructor stub
+	}
+    
+    // Getters y setters
     public Long getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Establecimiento getEstablecimiento() {
-		return establecimiento;
-	}
+    public LocalDate getFecha() {
+        return fecha;
+    }
 
-	public void setEstablecimiento(Establecimiento establecimiento) {
-		this.establecimiento = establecimiento;
-	}
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
 
-	public String getCliente() {
-		return cliente;
-	}
+    public String getHora() {
+        return hora;
+    }
 
-	public void setCliente(String cliente) {
-		this.cliente = cliente;
-	}
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
 
-	public LocalDate getFecha() {
-		return fecha;
-	}
+    public Establecimiento getEstablecimiento() {
+        return establecimiento;
+    }
 
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
-	}
+    public void setEstablecimiento(Establecimiento establecimiento) {
+        this.establecimiento = establecimiento;
+    }
 
-	public String getHora() {
-		return hora;
-	}
-
-	public void setHora(String hora) {
-		this.hora = hora;
-	}
-
-	public Usuario getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
@@ -84,28 +82,11 @@ public class Reserva {
         this.usuario = usuario;
     }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(cliente, establecimiento, fecha, hora, id, usuario);
+	public boolean isReserbable() {
+		return reserbable;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Reserva other = (Reserva) obj;
-		return Objects.equals(cliente, other.cliente) && Objects.equals(establecimiento, other.establecimiento)
-				&& Objects.equals(fecha, other.fecha) && Objects.equals(hora, other.hora)
-				&& Objects.equals(id, other.id) && Objects.equals(usuario, other.usuario);
-	}
-
-	@Override
-	public String toString() {
-		return "Reserva [id=" + id + ", establecimiento=" + establecimiento + ", cliente=" + cliente + ", fecha="
-				+ fecha + ", hora=" + hora + ", usuario=" + usuario + "]";
+	public void setReserbable(boolean reserbable) {
+		this.reserbable = reserbable;
 	}
 }

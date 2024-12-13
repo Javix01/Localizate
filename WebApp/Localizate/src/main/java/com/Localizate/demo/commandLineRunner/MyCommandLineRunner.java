@@ -12,7 +12,6 @@ import com.Localizate.demo.domain.Reserva;
 import com.Localizate.demo.repositories.ReservaRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
@@ -79,12 +78,12 @@ public class MyCommandLineRunner implements CommandLineRunner {
         establecimientoRepository.save(establecimiento1);
         establecimientoRepository.save(establecimiento2);
 
-     // Crear una reserva para establecimiento1
+        // Crear una reserva para establecimiento1
         Reserva reserva1 = new Reserva();
         reserva1.setFecha(LocalDate.of(2024, 12, 20));  // Fecha de la reserva
         reserva1.setHora("20:00");  // Hora de la reserva
-        reserva1.setCliente("Luiky");
         reserva1.setEstablecimiento(establecimiento1);  // Relación con el establecimiento
+        reserva1.setUsuario(usuario1Saved);  // Relación con el usuario
 
         // Guardar reserva
         reservaRepository.save(reserva1);
@@ -113,16 +112,24 @@ public class MyCommandLineRunner implements CommandLineRunner {
         // Guardar establecimiento
         establecimientoRepository.save(establecimiento3);
 
-     // Crear una reserva para establecimiento3
+        // Crear una reserva para establecimiento3
         Reserva reserva2 = new Reserva();
         reserva2.setFecha(LocalDate.of(2024, 12, 25));  // Fecha de la reserva
         reserva2.setHora("18:30");  // Hora de la reserva
-        reserva2.setCliente("Pedro");
         reserva2.setEstablecimiento(establecimiento3);  // Relación con el establecimiento
-
+        reserva2.setUsuario(usuario2Saved);  // Relación con el usuario
 
         // Guardar reserva
         reservaRepository.save(reserva2);
+        
+     // Crear el primer usuario con contraseña encriptada
+        Usuario usuario3 = new Usuario();
+        usuario3.setNombre("Javier");
+        usuario3.setEmail("javier@javier.es");
+        usuario3.setPassword(passwordEncoder.encode("javier")); // Contraseña encriptada
+        usuario3.setRole("USER");
+        // Guardar el usuario
+        Usuario usuario3Saved = usuarioRepository.save(usuario3);
 
         System.out.println("Datos de prueba para usuarios, establecimientos y reservas creados exitosamente.");
     }

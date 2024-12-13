@@ -24,5 +24,5 @@ public interface EstablecimientoService {
     // Agregar el método eliminarEstablecimiento
     void eliminarEstablecimiento(Long id); // Este es el método que necesitamos
     
-    long contarReservasPorEstablecimiento(Long establecimientoId);
+    //long contarReservasPorEstablecimiento(Long establecimientoId);
 }
