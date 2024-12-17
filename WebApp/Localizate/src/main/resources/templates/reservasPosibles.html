@@ -48,18 +48,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="reserva : ${reservas}">
-                    <td th:text="${reserva.fecha}"></td>
-                    <td th:text="${reserva.hora}"></td>
-                    <td>
-                        <!-- Solo mostrar el botón si la reserva es disponible -->
-                        <form th:if="${reserva.reservable}" th:action="@{/reservar/{reservaId}(reservaId=${reserva.id})}" method="post">
-                            <button type="submit" class="btn btn-success">Reservar</button>
-                        </form>
-                        <span th:if="${not reserva.reservable}" class="text-muted">Reservado.</span>
-                    </td>
-                </tr>
-            </tbody>
+			    <!-- Mostrar solo las reservas que no han sido reservadas -->
+			    <tr th:each="reserva : ${reservas}" th:if="${reserva.reservable}">
+			        <td th:text="${reserva.fecha}"></td>
+			        <td th:text="${reserva.hora}"></td>
+			        <td>
+			            <!-- Botón para realizar la reserva -->
+			            <form th:action="@{/reservar/{reservaId}(reservaId=${reserva.id})}" method="post">
+			                <button type="submit" class="btn btn-success">Reservar</button>
+			            </form>
+			        </td>
+			    </tr>
+			</tbody>
         </table>
 
         <a href="/listEstablecimientos" class="btn btn-primary mt-3">Volver a la Lista</a>
