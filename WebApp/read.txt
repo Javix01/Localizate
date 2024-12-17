@@ -47,6 +47,9 @@ Ahora un usuario que haya creado una reserva puede ver todas las que hay.
 Ahora el usuario que gestiona un local tiene un centro de gestión de reservas, donde se crean, se pueden eliminar y puede ver las reseñas que le dejan los usuarios asi como ver quien ha reservado.
 En el espacio de detalles de un establecimiento ahora se pueden ver las reseñas de los usuarios.
 
+17/12/2024 19:10
+Ahora las reservas realizadas no apareceran en la lista.
+
 Acciones futuras:
 - Que no salgan a los usuarios reservas anteriores a la fecha y hora que tiene el dispositivo en la actualidad.
 - Comprobar posibles errores y notificarlos al usuario, así como comprobar que todos los enlaces están correctos, sobre todo en el menú. 
