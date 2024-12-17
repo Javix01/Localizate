@@ -43,13 +43,14 @@ Ahora un usuario que haya hecho una reserva puede poner una reseña y aparecerá
 13/12/2024 22:25
 Ahora un usuario que haya creado una reserva puede ver todas las que hay.
 
-
+17/12/2024 18:42
+Ahora el usuario que gestiona un local tiene un centro de gestión de reservas, donde se crean, se pueden eliminar y puede ver las reseñas que le dejan los usuarios asi como ver quien ha reservado.
+En el espacio de detalles de un establecimiento ahora se pueden ver las reseñas de los usuarios.
 
 Acciones futuras:
 - Que no salgan a los usuarios reservas anteriores a la fecha y hora que tiene el dispositivo en la actualidad.
-- Hacer un centro de gestión de reservas para el administrador del local (falta borrar).
-- Hacer que las reseñas escritas se vean en los detalles del establecimiento.
 - Comprobar posibles errores y notificarlos al usuario, así como comprobar que todos los enlaces están correctos, sobre todo en el menú. 
 *(OP) Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
+
 Nota:
 - Me he dado cuenta que si un usuario no hace reserva (porque el local no lo permite) no puede poner una reseña. -> Se podría crear una reserva toda a null menos los campos de la reseña.
