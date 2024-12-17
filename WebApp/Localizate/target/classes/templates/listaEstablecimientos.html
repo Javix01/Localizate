@@ -14,6 +14,9 @@
         .logo-image {
             height: 50px;
         }
+        .card {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -79,46 +82,35 @@
 		    </div>
 		</form>
         
-        <!-- Utilizar las clases de Bootstrap para la tabla principal -->
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Calle</th>
-                    <th>Ciudad</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Web</th>
-                    <th>Reseña</th>
-                    <th>Tipo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Iterar sobre la lista de establecimientos -->
-                <tr th:each="establecimiento : ${listaEstablecimientos}">
-                    <td>
-                        <!-- Enlace para ver los detalles del establecimiento -->
-                        <a th:href="@{/detallesEstablecimiento/{id}(id=${establecimiento.id})}" th:text="${establecimiento.nombre}"></a>
-                    </td>
-                    <td th:text="${establecimiento.calle}">Calle</td>
-                    <td th:text="${establecimiento.ciudad}">Ciudad</td>
-                    <td th:text="${establecimiento.email}">Email</td>
-                    <td th:text="${establecimiento.telefono}">Teléfono</td>
-                    <td>
-                        <a th:href="${establecimiento.web}" target="_blank" th:text="${establecimiento.web}">Web</a>
-                    </td>
-                    <td th:text="${#numbers.formatDecimal(establecimiento.reseña, 1, 2)}">Reseña</td>
-                    <td th:text="${establecimiento.tipoEstablecimiento}">Tipo</td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- Mostrar los establecimientos como tarjetas -->
+        <div class="row">
+            <div class="col-md-4" th:each="establecimiento : ${listaEstablecimientos}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a th:href="@{/detallesEstablecimiento/{id}(id=${establecimiento.id})}" th:text="${establecimiento.nombre}"></a>
+                        </h5>
+                        <p class="card-text">
+                            <strong>Dirección:</strong> <span th:text="${establecimiento.calle}"></span>, <span th:text="${establecimiento.ciudad}"></span><br>
+                            <strong>Email:</strong> <span th:text="${establecimiento.email}"></span><br>
+                            <strong>Teléfono:</strong> <span th:text="${establecimiento.telefono}"></span><br>
+                            <strong>Web:</strong> 
+                            <a th:href="${establecimiento.web}" target="_blank" th:text="${establecimiento.web}"></a><br>
+                            <strong>Reseña:</strong> <span th:text="${#numbers.formatDecimal(establecimiento.reseña, 1, 2)}"></span> / 5<br>
+                            <strong>Tipo:</strong> <span th:text="${establecimiento.tipoEstablecimiento}"></span>
+                        </p>
+                        <a class="btn btn-primary" th:href="@{/detallesEstablecimiento/{id}(id=${establecimiento.id})}">
+                            Ver más detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Agregar las referencias a Bootstrap JS y Popper.js (necesarios para algunos componentes de Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    
 </body>
 </html>
