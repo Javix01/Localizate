@@ -32,4 +32,8 @@ public interface ReservaService {
     void crearResenia(Reserva reserva);
     
     public List<Reserva> findByEstablecimiento(Establecimiento establecimiento);
+    
+    public List<Reserva> findResenasByEstablecimiento(Establecimiento establecimiento);
+    
+    public void deleteById(Long id);
 }

@@ -72,6 +72,23 @@
             </a>
         </div>
     </div>
+    
+    <div class="container mt-5">
+	    <h2>Reseñas de los Usuarios</h2>
+	    <div th:if="${resenas.isEmpty()}">
+	        <p>Aún no hay reseñas para este establecimiento.</p>
+	    </div>
+	    <div th:unless="${resenas.isEmpty()}">
+		    <ul class="list-group">
+		        <li class="list-group-item" th:each="resena : ${resenas}" th:if="${resena.calificacion != 0}">
+		            <p><span th:text="${resena.usuario.nombre != null ? resena.usuario.nombre : 'Anónimo'}"></span></p>
+		            <p><span th:text="${resena.contenido}"></span></p>
+		            <p><span th:text="${resena.calificacion}"></span> / 5</p>
+		        </li>
+		    </ul>
+		</div>
+	</div>
+    
 
     <!-- Agregar las referencias a Bootstrap JS y Popper.js (necesarios para algunos componentes de Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

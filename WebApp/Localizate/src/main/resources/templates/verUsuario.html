@@ -77,7 +77,7 @@
                     <th>Tipo</th>
                     <th>Editar</th>
                     <th>Borrar</th>
-                    <th>Crear reserva</th>
+                    <th>Gestión de reservas</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,7 +116,7 @@
 					    <a th:if="${establecimiento.admiteReservas}"
 					       th:href="@{/addReserva/{establecimientoId}(establecimientoId=${establecimiento.id})}" 
 					       class="btn btn-success">
-					        Crear Reserva
+					        Gestión de Reservas
 					    </a>
 					</td>
                 </tr>

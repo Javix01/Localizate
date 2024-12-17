@@ -56,7 +56,7 @@
                         <form th:if="${reserva.reservable}" th:action="@{/reservar/{reservaId}(reservaId=${reserva.id})}" method="post">
                             <button type="submit" class="btn btn-success">Reservar</button>
                         </form>
-                        <span th:if="${not reserva.reservable}" class="text-muted">No disponible</span>
+                        <span th:if="${not reserva.reservable}" class="text-muted">Reservado.</span>
                     </td>
                 </tr>
             </tbody>

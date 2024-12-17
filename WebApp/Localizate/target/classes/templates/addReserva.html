@@ -75,6 +75,7 @@
                     <th>Usuario</th>
                     <th>Calificación</th>
                     <th>Reseña</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -87,6 +88,15 @@
                     <td th:text="${reserva.usuario != null ? reserva.usuario.nombre : 'No asignado'}">Usuario</td>
                     <td th:text="${reserva.calificacion}">Hora</td>
                     <td th:text="${reserva.contenido}">Hora</td>
+                    <td>
+			            <!-- Formulario para eliminar la reserva -->
+			            <form th:action="@{/eliminarReserva/{id}(id=${reserva.id})}" method="post">
+			                <!-- Botón de eliminar -->
+			                <button type="submit" class="btn btn-danger">
+			                    <i class="fas fa-trash-alt"></i> Eliminar
+			                </button>
+			            </form>
+			        </td>
                 </tr>
             </tbody>
         </table>

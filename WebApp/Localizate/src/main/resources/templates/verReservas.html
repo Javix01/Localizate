@@ -46,21 +46,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="reserva : ${reservas}">
-                    <td th:text="${reserva.fecha}">Fecha</td>
-                    <td th:text="${reserva.hora}">Hora</td>
-                    <td>
-                        <form th:action="@{/reservas/eliminarReserva/{id}(id=${reserva.id})}" th:method="delete">
-                            <button type="submit" class="btn btn-danger">
-                                <span class="fas fa-trash"></span>
-                            </button>
-                        </form>
-                        
-                                               
-                    </td>
-                </tr>
-            </tbody>
+			    <tr th:each="reserva : ${reservas}">
+			        <td th:text="${reserva.fecha}">Fecha</td>
+			        <td th:text="${reserva.hora}">Hora</td>
+			        <td>
+			            <form th:action="@{/reservas/eliminarReserva/{id}(id=${reserva.id})}" th:method="delete">
+			                <button type="submit" class="btn btn-danger" 
+			                        th:disabled="${reserva.contenido != null && !reserva.contenido.isEmpty()}">
+			                    <span class="fas fa-trash"></span>
+			                </button>
+			            </form>
+			        </td>
+			    </tr>
+			</tbody>
         </table>
     </div>
+    
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+	<div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    
 </body>
 </html>

@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -174,32 +175,39 @@ public class ReservasController {
         return "misReservas";
     }
 
-    /**
-     * Cancelar la reserva.
-     */
     @PostMapping("/cancelarReserva/{reservaId}")
-    public String cancelarReserva(@PathVariable Long reservaId, Model model) {
+    public String cancelarReserva(@PathVariable Long reservaId, RedirectAttributes redirectAttributes) {
         Optional<Reserva> reservaOpt = reservaService.findById(reservaId);
 
         if (reservaOpt.isEmpty()) {
-            model.addAttribute("error", "La reserva no existe.");
-            return "error";
+            redirectAttributes.addFlashAttribute("error", "La reserva no existe.");
+            return "redirect:/misReservas";
         }
 
         Reserva reserva = reservaOpt.get();
-        reserva.setUsuario(null);  // Desasignar al usuario
-        reserva.setReservable(true); // Volver a hacer la reserva disponible
+
+        // Validar si la reserva tiene una reseña
+        if (reserva.getContenido() != null && !reserva.getContenido().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "No se puede cancelar una reserva que ya tiene una reseña.");
+            return "redirect:/misReservas";
+        }
+
+        // Si no hay reseña, proceder con la cancelación
+        reserva.setUsuario(null);  
+        reserva.setReservable(true); 
+        //reserva.setCalificacion(0);  
+        reserva.setContenido(""); 
 
         reservaService.actualizarReserva(reserva);
-        
-        // Obtener el establecimiento asociado a la reserva
+
         Establecimiento establecimiento = reserva.getEstablecimiento();
-        
-        // Actualizar la media de calificación del establecimiento
         actualizarMediaCalificacionesEstablecimiento(establecimiento);
 
+        redirectAttributes.addFlashAttribute("success", "Reserva cancelada con éxito.");
         return "redirect:/misReservas";
     }
+
+
 
     /**
      * Mostrar formulario para crear una reseña.
@@ -292,4 +300,19 @@ public class ReservasController {
         
         return "formularioReserva"; // Nombre del archivo HTML
     }
+    
+    @PostMapping("/eliminarReserva/{id}")
+    public String eliminarReserva(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        Optional<Reserva> reservaOpt = reservaService.findById(id);
+        
+        if (reservaOpt.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "La reserva no existe.");
+            return "redirect:/verUsuario";
+        }
+        
+        reservaService.deleteById(id);
+        redirectAttributes.addFlashAttribute("success", "Reserva eliminada correctamente.");
+        return "redirect:/verUsuario";
+    }
+
 }

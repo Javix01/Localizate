@@ -16,4 +16,7 @@ public interface ReservaRepository extends CrudRepository<Reserva, Long> {
     
  // Método para encontrar todas las reservas de un establecimiento
     List<Reserva> findByEstablecimiento(Establecimiento establecimiento);
+    
+    List<Reserva> findByEstablecimientoAndContenidoIsNotNull(Establecimiento establecimiento);
+
 }

@@ -79,4 +79,16 @@ public class ReservaServiceImpl implements ReservaService {
 	    return reservaRepository.findByEstablecimiento(establecimiento);
 	}
 
+	public List<Reserva> findResenasByEstablecimiento(Establecimiento establecimiento) {
+        return reservaRepository.findByEstablecimientoAndContenidoIsNotNull(establecimiento);
+    }
+	
+	/**
+     * Eliminar una reserva por su ID.
+     *
+     * @param id ID de la reserva a eliminar.
+     */
+    public void deleteById(Long id) {
+        reservaRepository.deleteById(id);
+    }
 }

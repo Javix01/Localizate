@@ -3,11 +3,15 @@ package com.Localizate.demo.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.Localizate.demo.domain.Establecimiento;
+import com.Localizate.demo.domain.Reserva;
 import com.Localizate.demo.domain.Usuario;
 import com.Localizate.demo.services.EstablecimientoService;
+import com.Localizate.demo.services.ReservaService;
 import com.Localizate.demo.services.UsuarioService;
 
 @Controller
@@ -15,10 +19,12 @@ public class EstablecimientoController {
 
 	private final EstablecimientoService establecimientoService;
     private final UsuarioService usuarioService;
+    private final ReservaService reservaService;
 
-    public EstablecimientoController(EstablecimientoService establecimientoService, UsuarioService usuarioService) {
+    public EstablecimientoController(EstablecimientoService establecimientoService, UsuarioService usuarioService, ReservaService reservaService) {
         this.establecimientoService = establecimientoService;
         this.usuarioService = usuarioService;
+        this.reservaService = reservaService;
     }
 
     @GetMapping("/listEstablecimientos")
@@ -133,8 +139,17 @@ public class EstablecimientoController {
     
     @GetMapping("/detallesEstablecimiento/{id}")
     public String verDetallesEstablecimiento(@PathVariable Long id, Model model) {
-        model.addAttribute("establecimiento", establecimientoService.findEstablecimientoById(id).orElseThrow(() -> 
-        new IllegalArgumentException("Establecimiento no encontrado")));
+    	Establecimiento establecimiento = establecimientoService.findEstablecimientoById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Establecimiento no encontrado"));
+
+        // Obtener las reseñas asociadas al establecimiento
+        List<Reserva> reservasConResena = new ArrayList<>();
+        
+        reservasConResena = reservaService.findResenasByEstablecimiento(establecimiento);
+
+        model.addAttribute("establecimiento", establecimiento);
+        model.addAttribute("resenas", reservasConResena); // Añadir reseñas al modelo
+        
         return "detallesEstablecimiento"; // Nombre del template
     }
 

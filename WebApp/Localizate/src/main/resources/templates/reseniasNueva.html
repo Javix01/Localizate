@@ -1,118 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dejar Reseña</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        h1 {
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        label {
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        textarea, input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            margin-bottom: 20px;
-            resize: vertical;
-        }
-
-        textarea {
-            height: 150px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
-	<!-- Menú de navegación -->
-	<header>
-	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	        <a class="navbar-brand" href="/listEstablecimientos">
+    <!-- Menú de navegación -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/listEstablecimientos">
                 <img th:src="@{/images/logo.jpeg}" alt="Logo" class="logo-image" style="width: 50px; height: auto;">
             </a>
-	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-	            <span class="navbar-toggler-icon"></span>
-	        </button>
-	        <div class="collapse navbar-collapse" id="navbarNav">
-	            <ul class="navbar-nav ml-auto">
-	                <li class="nav-item">
-	                    <a class="nav-link" href="/listEstablecimientos">Establecimientos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link" th:href="@{/misReservas}">Mis Reservas</a>
-	                </li>
-	                <!-- Nuevo enlace para ver los datos del usuario -->
-	                <li class="nav-item">
-	                    <a class="nav-link" th:href="@{/verUsuario}">Mis Datos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link" href="/logout">Cerrar Sesión</a>
-	                </li>
-	            </ul>
-	        </div>
-	    </nav>
-	</header>
-	
-    <h1>Dejar una Reseña</h1>
-    <div class="container">
-        <form th:action="@{/guardar/{reservaId}(reservaId=${reserva.id})}" method="post">
-            <label for="contenido">Contenido:</label><br>
-            <textarea id="contenido" name="contenido" rows="4" cols="50" required></textarea><br><br>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/listEstablecimientos">Establecimientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/misReservas}">Mis Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/verUsuario}">Mis Datos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-            <label for="calificacion">Calificación (1-5):</label><br>
-            <input type="number" id="calificacion" name="calificacion" min="1" max="5" required><br><br>
-
-            <button type="submit">Guardar Reseña</button>
-        </form>
+    <!-- Contenido principal -->
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0 text-center">Dejar una Reseña</h4>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/guardar/{reservaId}(reservaId=${reserva.id})}" method="post">
+                    <div class="form-group">
+                        <label for="contenido" class="font-weight-bold">Contenido:</label>
+                        <textarea id="contenido" name="contenido" rows="4" class="form-control" placeholder="Escribe tu reseña aquí..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="calificacion" class="font-weight-bold">Calificación (1-5):</label>
+                        <input type="number" id="calificacion" name="calificacion" min="1" max="5" class="form-control" placeholder="Elige una calificación" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-block">Guardar Reseña</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <!-- Scripts necesarios para Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
