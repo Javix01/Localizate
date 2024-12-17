@@ -48,7 +48,7 @@ Ahora el usuario que gestiona un local tiene un centro de gestión de reservas, 
 En el espacio de detalles de un establecimiento ahora se pueden ver las reseñas de los usuarios.
 
 17/12/2024 19:10
-Ahora las reservas realizadas no apareceran en la lista.
+Ahora las reservas realizadas no apareceran en la lista y se ma modificado el front de la lista de establecimientos.
 
 Acciones futuras:
 - Que no salgan a los usuarios reservas anteriores a la fecha y hora que tiene el dispositivo en la actualidad.
