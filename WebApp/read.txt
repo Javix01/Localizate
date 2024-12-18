@@ -50,10 +50,6 @@ En el espacio de detalles de un establecimiento ahora se pueden ver las reseñas
 17/12/2024 19:10
 Ahora las reservas realizadas no apareceran en la lista y se ma modificado el front de la lista de establecimientos.
 
-Acciones futuras:
-- Que no salgan a los usuarios reservas anteriores a la fecha y hora que tiene el dispositivo en la actualidad.
-- Comprobar posibles errores y notificarlos al usuario, así como comprobar que todos los enlaces están correctos, sobre todo en el menú. 
-*(OP) Diferenciar las reseñas entre unas donde solo se necesita una hora y otras donde haya aforo.
-
-Nota:
-- Me he dado cuenta que si un usuario no hace reserva (porque el local no lo permite) no puede poner una reseña. -> Se podría crear una reserva toda a null menos los campos de la reseña.
+18/12/2024 20:52
+-Se ha asegurado que solo salgan reservas de al menos una hora más tarde que la fecha actual
+-Se ha corregido y comprobado distintos errores.
