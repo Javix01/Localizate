@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Detalles del Establecimiento</title>
+
+    <!-- Agregar las referencias a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Agregar las referencias a Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+	<!-- Menú de navegación -->
+	<header>
+	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	        <a class="navbar-brand" href="/listEstablecimientos">
+                <img th:src="@{/images/logo.jpeg}" alt="Logo" class="logo-image" style="width: 50px; height: auto;">
+            </a>
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+	        <div class="collapse navbar-collapse" id="navbarNav">
+	            <ul class="navbar-nav ml-auto">
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/listEstablecimientos">Establecimientos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" th:href="@{/misReservas}">Mis Reservas</a>
+	                </li>
+	                <!-- Nuevo enlace para ver los datos del usuario -->
+	                <li class="nav-item">
+	                    <a class="nav-link" th:href="@{/verUsuario}">Mis Datos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/logout">Cerrar Sesión</a>
+	                </li>
+	            </ul>
+	        </div>
+	    </nav>
+	</header>
+	
+    <div class="container mt-5">
+        <h2>Detalles del Establecimiento</h2>
+
+        <!-- Mostrar la información del establecimiento -->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" th:text="${establecimiento.nombre}"></h4>
+                <p class="card-text">
+                    <strong>Localización:</strong> <span th:text="${establecimiento.localizacion}"></span><br>
+                    <strong>Dirección:</strong> <span th:text="${establecimiento.calle}"></span><br>
+                    <strong>Ciudad:</strong> <span th:text="${establecimiento.ciudad}"></span><br>
+                    <strong>Email:</strong> <span th:text="${establecimiento.email}"></span><br>
+                    <strong>Teléfono:</strong> <span th:text="${establecimiento.telefono}"></span><br>
+                    <strong>Web:</strong> 
+                    <a th:href="${establecimiento.web}" target="_blank" th:text="${establecimiento.web}"></a><br>
+                    <strong>Reseña:</strong> <span th:text="${#numbers.formatDecimal(establecimiento.reseña, 1, 2)}"></span><br>
+                    <strong>Tipo de Establecimiento:</strong> <span th:text="${establecimiento.tipoEstablecimiento}"></span>
+                </p>
+                <a th:if="${establecimiento.admiteReservas}" 
+					   th:href="@{/reservas/nuevo/{idEstablecimiento}(idEstablecimiento=${establecimiento.id})}" 
+					   class="btn btn-primary mt-3">Reservar</a>
+
+            </div>
+        </div>
+
+        <!-- Botón para regresar a la lista de establecimientos -->
+        <div class="mt-3">
+            <a th:href="@{/listEstablecimientos}" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Volver a la Lista
+            </a>
+        </div>
+    </div>
+    
+    <div class="container mt-5">
+	    <h2>Reseñas de los Usuarios</h2>
+	    <div th:if="${resenas.isEmpty()}">
+	        <p>Aún no hay reseñas para este establecimiento.</p>
+	    </div>
+	    <div th:unless="${resenas.isEmpty()}">
+		    <ul class="list-group">
+		        <li class="list-group-item" th:each="resena : ${resenas}" th:if="${resena.calificacion != 0}">
+		            <p><span th:text="${resena.usuario.nombre != null ? resena.usuario.nombre : 'Anónimo'}"></span></p>
+		            <p><span th:text="${resena.contenido}"></span></p>
+		            <p><span th:text="${resena.calificacion}"></span> / 5</p>
+		        </li>
+		    </ul>
+		</div>
+	</div>
+    
+
+    <!-- Agregar las referencias a Bootstrap JS y Popper.js (necesarios para algunos componentes de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
