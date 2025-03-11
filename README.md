@@ -3,8 +3,8 @@
 ![LOGO](Imagen/logo.jpeg)
 
 ## Integrantes
-- **Juan Pérez Villegas** 09220337-M
-- **Javier García Sánchez** 07257252-Q
+- **Juan Pérez Villegas**
+- **Javier García Sánchez**
 
 ## Eslogan
 *Más rápido que preguntar a tu vecino.*
